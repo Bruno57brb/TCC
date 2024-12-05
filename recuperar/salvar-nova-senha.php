@@ -6,7 +6,7 @@ $repetirSenha = $_POST['repetirSenha'];
 
 require_once "conexao.php";
 $conexao = conectar();
-$sql = "SELECT * FROM `recuperar-senha` WHERE email='$email' AND 
+$sql = "SELECT * FROM `recuperar_senha` WHERE email='$email' AND 
         token='$token'";
 $resultado = executarSQL($conexao, $sql);
 $recuperar = mysqli_fetch_assoc($resultado);
@@ -50,7 +50,7 @@ if ($recuperar == null) {
     $sql2 = "UPDATE usuario SET senha='$senha' WHERE 
              email='$email'";
     executarSQL($conexao, $sql2);
-    $sql3 = "UPDATE `recuperar-senha` SET usado=1 WHERE 
+    $sql3 = "UPDATE `recuperar_senha` SET usado=1 WHERE 
              email='$email' AND token='$token'";
     executarSQL($conexao, $sql3);
 

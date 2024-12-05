@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="shurcut icon" href="">
-    <title>email</title>
+    <link rel="shortcut icon" href="">
+    <title>Recuperação de Senha</title>
 </head>
 
 <body>
@@ -37,6 +37,10 @@ if ($usuario == null) {
             title: 'Email não cadastrado!',
             text: 'Faça o cadastro e em seguida realize o login.',
             confirmButtonText: 'Ok'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../index.php';
+            }
         });
     </script>";
     die();
@@ -83,8 +87,8 @@ try {
     $mail->Body = 'Olá!<br>
         Você solicitou a recuperação da sua conta no nosso sistema.
         Para isso, clique no link abaixo para realizar a troca de senha:<br>
-        <a href="' . $_SERVER['SERVER_NAME'] . 'tcc/recuperar/recuperar-senha/nova-senha.php?email='
-        . $usuario['email'] . '&token=' . $token .
+        <a href="' . $_SERVER['SERVER_NAME'] . '/tcc/recuperar/nova-senha.php?email='
+        . $usuario['email'] . '&token=' . $token . 
         '">Clique aqui para recuperar o acesso à sua conta!</a><br><br>
         Atenciosamente<br>
         Equipe do sistema...';
@@ -109,6 +113,10 @@ try {
             title: 'Email enviado com sucesso!',
             text: 'Confira seu email para recuperar o acesso.',
             confirmButtonText: 'Ok'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../index.php';
+            }
         });
     </script>";
 } catch (Exception $e) {
@@ -119,6 +127,10 @@ try {
             title: 'Erro ao enviar o email!',
             text: 'Mailer Error: {$mail->ErrorInfo}',
             confirmButtonText: 'Ok'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../index.php';
+            }
         });
     </script>";
 }
