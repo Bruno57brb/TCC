@@ -31,26 +31,18 @@ if (isset($_POST['Nome'], $_POST['SIAPE'], $_POST['Email'], $_POST['Senha'], $_P
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // Verifica se o usuário já existe
     if ($result->num_rows > 0) {
-        // Usuário já cadastrado
-        echo "<script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Erro ao cadastrar',
-            text: 'Usuário já cadastrado.',
-            showConfirmButton: false,
-            timer: 1500
-        }).then(() => {
-            window.location.href = '../cadastrar_usuario.php'; // Redireciona de volta para o formulário
-        });
-        </script>";
+        echo "Usuário já existe.";
     } else {
-        // Cadastrar no banco
-        $sql = "INSERT INTO usuario (Nome, SIAPE, Email, Perfil, Senha) 
-                VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("sssss", $Nome, $SIAPE, $Email, $Perfil, $Senha); // 'ssss' indica que todos os parâmetros são strings
+        // Hash da senha
+        $senha_hash = password_hash($Senha, PASSWORD_DEFAULT);
 
+        // Preparar a consulta para inserir o novo usuário
+        $stmt = $conexao->prepare("INSERT INTO usuario (Nome, SIAPE, Email, senha, Perfil) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $Nome, $SIAPE, $Email, $senha_hash, $Perfil); // 's' indica que todos os parâmetros são strings
+
+        // Executar a inserção
         if ($stmt->execute()) {
             echo "<script>
             Swal.fire({

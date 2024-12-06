@@ -135,7 +135,40 @@
             </div>
         </div>
     </div>
+<<?php
+// Conexão com o banco de dados
+$conexao = mysqli_connect("localhost", "root", "", "assistencia");
 
+// Verifica se a conexão foi bem-sucedida
+if (!$conexao) {
+    die("Conexão falhou: " . mysqli_connect_error());
+}
+
+// Verifica se o método de requisição é POST
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Escapa as entradas para evitar SQL Injection
+    $nome = mysqli_real_escape_string($conexao, $_POST['Nome']);
+    $SIAPE = mysqli_real_escape_string($conexao, $_POST['SIAPE']);
+    $email = mysqli_real_escape_string($conexao, $_POST['Email']);
+    $senha = mysqli_real_escape_string($conexao, $_POST['Senha']);
+    $perfil = mysqli_real_escape_string($conexao, $_POST['Perfil']);
+
+    // Hash da senha
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+    // Inserir no banco de dados
+    $sql = "INSERT INTO usuario (Nome, SIAPE, Email, senha, Perfil) VALUES ('{$nome}', '{$SIAPE}', '{$email}', '{$senha_hash}', '{$perfil}')";
+    
+    if (mysqli_query($conexao, $sql)) {
+        echo "Usuário registrado com sucesso!";
+    } else {
+        echo "Erro ao registrar usuário: " . mysqli_error($conexao);
+    }
+}
+
+// Fecha a conexão
+mysqli_close($conexao);
+?>
     <?php include_once "footer.php"; ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

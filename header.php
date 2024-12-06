@@ -49,7 +49,7 @@ if ($_SESSION['Perfil'] == 1 ) {
 ?>
   <li><a href="cadastrar_usuario.php" class="nav-link">
       <i class="fab fa-dochub"></i>
-      <span class="nav-item">Cadastro do Docente</span>
+      <span class="nav-item">Cadastro do Servidor</span>
     </a></li>
 <?php 
 }

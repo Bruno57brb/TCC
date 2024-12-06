@@ -1,7 +1,7 @@
 <?php
 
 // Inclui o arquivo de configurações
-require_once "config_.php"; // Aqui é onde o config.php deve ser incluído corretamente
+require_once "config.php"; // Aqui é onde o config.php deve ser incluído corretamente
 
 /**
  * Faz uma conexão com o banco de dados MySQL, 

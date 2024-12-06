@@ -78,9 +78,9 @@ try {
     );
 
     // Configuração do destinatário e do conteúdo
-    $mail->setFrom($config['email'], 'Aula de Tópicos');
+    $mail->setFrom($config['email'], 'Sistema');
     $mail->addAddress($usuario['email'], $usuario['nome']);
-    $mail->addReplyTo($config['email'], 'Aula de Tópicos');
+    $mail->addReplyTo($config['email'], 'sistema');
 
     $mail->isHTML(true);
     $mail->Subject = 'Recuperação de Senha do Sistema';
