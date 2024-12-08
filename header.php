@@ -56,7 +56,7 @@ if ($_SESSION['Perfil'] == 1 ) {
 ?>
 
 
-      <li><a href="#" class="nav-link">
+      <li><a href="crud/cadastrar_aluno.php" class="nav-link">
           <i class="fab fa-dochub"></i>
           <span class="nav-item">Cadastro do discente</span>
         </a></li>

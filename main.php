@@ -24,6 +24,8 @@ if (isset($_SESSION['login'])) {
 
 <style>
  <?php include_once"css/main.css" ?>
+
+ 
 </style>
 
 <body class="white">
@@ -76,11 +78,11 @@ if (isset($_SESSION['login'])) {
             </div>
 
             <!-- Campo Turma -->
-            <div class="input-field">
+           <div class="input-field">
               <i class="material-icons prefix"></i>
               <textarea id="turma" name="turma" class="materialize-textarea" required></textarea>
               <label for="turma">Turma</label>
-            </div>
+            </div> 
 
             <!-- Campo Motivo -->
             <div class="input-field">

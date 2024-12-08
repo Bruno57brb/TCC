@@ -37,38 +37,31 @@
         <div class="cad-box">
                
                 <div class="col s12 m8 offset-m2 l6 offset-l3">
-                    <form action="cadastrar-servidor.php" method="POST">
-                        <h5 class="center-align">CADASTRAR-SE</h5>
+                    <form action="cadastrar-aluno.php" method="POST">
+                        <h5 class="center-align">CADASTRARO DE ALUNO</h5>
 
                         <div class="input-field">
                             <input type="text" id="nome" name="Nome" class="validate" required autofocus>
                             <label for="nome">Nome</label>
                         </div>
                         <div class="input-field">
-                            <input type="text" id="SIAPE" name="SIAPE" class="validate" required>
-                            <label for="SIAPE">SIAPE</label>
+                            <input type="text" id="matricula" name="matricula" class="validate" required>
+                            <label for="matricula">matricula</label>
                         </div>
 
                         <div class="input-field">
                             <input type="Email" id="Email" name="Email" class="validate" required>
                             <label for="Email">Email</label>
                         </div>
-                        <div class="input-field senha-container">
-                            <input type="password" id="senha" name="Senha" class="validate" required>
-                            <label for="senha">Senha</label>
-                            <img id="olho" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SvW3DMBBGbwQVKlyo4BGC4FKFS4+TATKCNxAggkeoSpHSRQbwAB7AA7hQoUKFLH6E2qQQHfgHdpo0yQHX8T3exyPR/ytlQ8kOhgV7FvSx9+xglA3lM3DBgh0LPn/onbJhcQ0bv2SHlgVgQa/suFHVkCg7bm5gzB2OyvjlDFdDcoa19etZMN8Qp7oUDPEM2KFV1ZAQO2zPMBERO7Ra4JQNpRa4K4FDS0R0IdneCbQLb4/zh/c7QdH4NL40tPXrovFpjHQr6PJ6yr5hQV80PiUiIm1OKxZ0LICS8TWvpyyOf2DBQQtcXk8Zi3+JcKfNafVsjZ0WfGgJlZZQxZjdwzX+ykf6u/UF0Fwo5Apfcq8AAAAASUVORK5CYII=" />
-                        </div>
-
                         <div class="input-field">
-                            <select id="Perfil" name="Perfil" required>
-                                <option value="" disabled selected>Selecione a Categoria</option>
-                                <option value="1">Coordenação</option>
-                                <option value="2">Nutricionista</option>
-                                <option value="3">Psicóloga</option>
-                                <option value="4">enfermeira</option>
-                                <option value="5">Médico</option>
-                            </select>
+                            <input type="text" id="turma" name="turma" class="validate" required>
+                            <label for="turma">turma</label>
                         </div>
+                        <div class="input-field">
+                            <input type="text" id="CPF" name="CPF" class="validate" required>
+                            <label for="CPF">CPF</label>
+                        </div>
+              
 
                         <div class="row">
                             <div class="col s12">
@@ -96,16 +89,16 @@ if (!$conexao) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Escapa as entradas para evitar SQL Injection
     $nome = mysqli_real_escape_string($conexao, $_POST['Nome']);
-    $SIAPE = mysqli_real_escape_string($conexao, $_POST['SIAPE']);
+    $matricula = mysqli_real_escape_string($conexao, $_POST['matricula']);
     $email = mysqli_real_escape_string($conexao, $_POST['Email']);
-    $senha = mysqli_real_escape_string($conexao, $_POST['Senha']);
-    $perfil = mysqli_real_escape_string($conexao, $_POST['Perfil']);
+    $turma = mysqli_real_escape_string($conexao, $_POST['turma']);
+    $CPF = mysqli_real_escape_string($conexao, $_POST['CPF']);
 
-    // Hash da senha
-    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+
 
     // Inserir no banco de dados
-    $sql = "INSERT INTO usuario (Nome, SIAPE, Email, senha, Perfil) VALUES ('{$nome}', '{$SIAPE}', '{$email}', '{$senha_hash}', '{$perfil}')";
+    $sql = "INSERT INTO usuario (Nome, matricula, Email, turma, CPF) VALUES ('{$nome}', '{$matricula}', '{$email}', '{$turma}', '{$CPF}')";
     
     if (mysqli_query($conexao, $sql)) {
         echo "Usuário registrado com sucesso!";
@@ -120,29 +113,7 @@ mysqli_close($conexao);
     <?php include_once "../footer.php"; ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-        // Função para mostrar o formulário de cadastro
-    
-      
 
-        $(document).ready(function() {
-            $('#olho').click(function(e) {
-                e.preventDefault();
-                var senha = $('#senha');
-
-                if (senha.attr('type') === 'password') {
-                    senha.attr('type', 'text');
-                    $(this).css('opacity', '0.8');
-                } else {
-                    senha.attr('type', 'password');
-                    $(this).css('opacity', '0.6');
-                }
-            });
-
-            // Inicialização do seletor
-            $('select').formSelect();
-        });
-    </script>
 </body>
 
 </html>
