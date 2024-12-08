@@ -47,7 +47,7 @@ mysqli_close($conexao);
 // Verifica se o perfil é 1 (ou outro perfil desejado)
 if ($_SESSION['Perfil'] == 1 ) {
 ?>
-  <li><a href="cadastrar_usuario.php" class="nav-link">
+  <li><a href="crud/cadastrar_servidor.php" class="nav-link">
       <i class="fab fa-dochub"></i>
       <span class="nav-item">Cadastro do Servidor</span>
     </a></li>
@@ -81,119 +81,7 @@ if ($_SESSION['Perfil'] == 1 ) {
 </nav>
 
 <style>
-  .header-logo {
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-            position: absolute;
-            top: -10px;
-            right: 50px;
-            width: 200px;
-            height: 160px;
-            background-color: white;
-            border: 5px solid #006f3c;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            z-index: 2;
-            padding: 20px;
-        }
-
-        .header-logo img {
-            width: 100%;
-            height: auto;
-        }
-
-  
-  .nav-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .toggle-btn {
-    font-size: 30px;
-    cursor: pointer;
-    padding: 15px;
-    background: none;
-    color: white;
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 1000;
-  }
-
-  #sidebar {
-    position: fixed;
-    top: 0;
-    left: -280px;
-    width: 280px;
-    height: 100vh;
-    background: #39a046;
-    color: white;
-    padding: 20px 0;
-    transition: left 0.3s ease;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    padding-bottom: 2rem;
-  }
-
-  .logo img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-
-  .logo h1 {
-    margin-left: 1rem;
-    font-size: 18px;
-    text-transform: uppercase;
-    color: white;
-  }
-
-  ul {
-    padding-left: 0;
-  }
-
-  li {
-    margin-bottom: 2rem;
-  }
-
-  li a {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: rgb(200, 200, 200);
-    padding: 10px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  li a:hover {
-    background-color: #444;
-    color: white;
-    transform: translateX(10px);
-  }
-
-  li a i {
-    margin-right: 15px;
-    transition: transform 0.3s ease;
-  }
-
-  li a:hover i {
-    transform: translateX(10px);
-  }
-
-  .logout {
-    padding: 0 20px;
-    width: 100%;
-  }
-
- 
+  <?php include_once "css/header.css"  ?>
 </style>
 
 <script>
