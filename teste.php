@@ -375,8 +375,13 @@ if (isset($_SESSION['login'])) {
       <i class="fas fa-user-graduate"></i>
       <h5>Alunos</h5>
     </div>
-    <div class="card-action">
-      <a href="#" class="white-text">Acessar</a>
+
+      <a href="#" class="white-text">
+      <div class="card-action">
+        ACESSAR
+
+      </div>
+      </a>
     </div>
   </div>
 </div>
