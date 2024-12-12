@@ -13,59 +13,70 @@
 </head>
 
 <body>
-   <?php
-   session_start();
-   require_once "conexao/conexao.php";
-   $conexao = conectar();
- 
+<?php
+session_start();
+require_once "conexao/conexao.php";
+$conexao = conectar();
 
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $SIAPE = mysqli_real_escape_string($conexao, $_POST['SIAPE']);
-      $senha = mysqli_real_escape_string($conexao, $_POST['senha']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $SIAPE = mysqli_real_escape_string($conexao, $_POST['SIAPE']);
+    $senha = mysqli_real_escape_string($conexao, $_POST['senha']);
 
-      // Consulta ao banco de dados
-      $sql = "SELECT * FROM usuario WHERE SIAPE = '{$SIAPE}' AND senha = '{$senha}'";
-      $resultado = mysqli_query($conexao, $sql);
+    // Consulta ao banco de dados
+    $sql = "SELECT * FROM usuario WHERE SIAPE = '{$SIAPE}'";
+    $resultado = mysqli_query($conexao, $sql);
 
-      if ($resultado && mysqli_num_rows($resultado) > 0) {
-         $dados = mysqli_fetch_assoc($resultado);
-         $_SESSION['SIAPE'] = $SIAPE;
-         $_SESSION['id_usuario'] = $dados['id_usuario'];
-         $_SESSION['Nome'] = $dados['nome'];
-         $_SESSION['Perfil'] = $dados['Perfil'];
-         $_SESSION['Senha'] = $dados['senha'];
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        $dados = mysqli_fetch_assoc($resultado);
 
-         // Exibir mensagem de sucesso
-         $_SESSION['login'] = [
-            "icon" => 'success',
-            "title" => 'Seja bem-vindo, ' . $dados['nome'],
-            "showConfirmButton" => false,
-            "timer" => 1500
-         ];
+        // Verifica a senha usando password_verify
+        if (password_verify($senha, $dados['senha'])) {
+            $_SESSION['SIAPE'] = $SIAPE;
+            $_SESSION['id_usuario'] = $dados['id_usuario'];
+            $_SESSION['Nome'] = $dados['nome'];
+            $_SESSION['Perfil'] = $dados['Perfil'];
 
-         // Redirecionar para a página principal
-         header("Location: main.php");
-         exit();
-      } else {
-         // Exibir alerta de erro com SweetAlert2
-         echo "<script>
+            // Exibir mensagem de sucesso
+            $_SESSION['login'] = [
+                "icon" => 'success',
+                "title" => 'Seja bem-vindo, ' . $dados['nome'],
+                "showConfirmButton" => false,
+                "timer" => 1500
+            ];
+
+            // Redirecionar para a página principal
+            header("Location: main.php");
+            exit();
+        } else {
+            // Exibir alerta de erro com SweetAlert2
+            echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Credenciais inválidas',
+                    text: 'SIAPE ou senha incorretos. Por favor, tente novamente.',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Ok'
+                }).then(() => {
+                    location.href='index.php';
+                });
+            </script>";
+        }
+    } else {
+        // Exibir alerta de erro com SweetAlert2
+        echo "<script>
             Swal.fire({
-               icon: 'error',
-               title: 'Credenciais inválidas',
-               text: 'SIAPE ou senha incorretos. Por favor, tente novamente.',
-               showConfirmButton: true,
-               confirmButtonText: 'Ok'
-                       }).then(() => {
+                icon: 'error',
+                title: 'Credenciais inválidas',
+                text: 'SIAPE ou senha incorretos. Por favor, tente novamente.',
+                showConfirmButton: true,
+                confirmButtonText: 'Ok'
+            }).then(() => {
                 location.href='index.php';
             });
-         </script>";
+        </script>";
+    }
 
-      }
-
-      // Fechar a conexão
-      mysqli_close($conexao);
-   }
-   ?>
-</body>
-
-</html>
+    // Fechar a conexão
+    mysqli_close($conexao);
+}
+?>

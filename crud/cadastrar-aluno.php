@@ -13,44 +13,36 @@
 
 <?php
 // Verificar se todos os dados foram enviados pelo formulário
-if (isset($_POST['Nome'], $_POST['SIAPE'], $_POST['Email'], $_POST['Senha'], $_POST['Perfil'])) {
+if (isset($_POST['Nome'], $_POST['matricula'], $_POST['Email'], $_POST['turma'], $_POST['CPF'])) {
     // Receber os dados do formulário
     $Nome = $_POST['Nome'];
-    $SIAPE = $_POST['SIAPE'];
+    $matricula = $_POST['matricula'];
     $Email = $_POST['Email'];
-    $Senha = $_POST['Senha'];
-    $Perfil = $_POST['Perfil'];
+    $turma = $_POST['turma'];
+    $CPF = $_POST['CPF'];
 
     // Conectar ao BD
     require_once "../conexao/conexao.php";
     $conexao = conectar();
 
     // Preparar a consulta para verificar se o usuário já existe
-    $stmt = $conexao->prepare("SELECT * FROM usuario WHERE SIAPE = ?");
-    $stmt->bind_param("s", $SIAPE); // 's' indica que o parâmetro é uma string
+    $stmt = $conexao->prepare("SELECT * FROM alunos WHERE matricula = ?");
+    $stmt->bind_param("s", $matricula); // 's' indica que o parâmetro é uma string
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // Verifica se o usuário já existe
     if ($result->num_rows > 0) {
-        // Usuário já cadastrado
-        echo "<script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Erro ao cadastrar',
-            text: 'Usuário já cadastrado.',
-            showConfirmButton: false,
-            timer: 1500
-        }).then(() => {
-            window.location.href = '../cadastrar_usuario.php'; // Redireciona de volta para o formulário
-        });
-        </script>";
+        echo "Usuário já existe.";
     } else {
-        // Cadastrar no banco
-        $sql = "INSERT INTO usuario (Nome, SIAPE, Email, Perfil, Senha) 
-                VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("sssss", $Nome, $SIAPE, $Email, $Perfil, $Senha); // 'ssss' indica que todos os parâmetros são strings
 
+
+
+        // Preparar a consulta para inserir o novo usuário
+        $stmt = $conexao->prepare("INSERT INTO alunos (Nome, matricula, Email, turma, CPF) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $Nome, $matricula, $Email, $turma, $CPF); // 's' indica que todos os parâmetros são strings
+
+        // Executar a inserção
         if ($stmt->execute()) {
             echo "<script>
             Swal.fire({
@@ -72,7 +64,7 @@ if (isset($_POST['Nome'], $_POST['SIAPE'], $_POST['Email'], $_POST['Senha'], $_P
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                window.location.href = '../cadastrar_usuario.php'; // Redireciona de volta para o formulário
+                window.location.href = '../cadastrar_aluno.php'; // Redireciona de volta para o formulário
             });
             </script>";
         }

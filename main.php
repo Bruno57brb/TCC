@@ -23,54 +23,9 @@ if (isset($_SESSION['login'])) {
 <?php include_once "header.php"; ?>
 
 <style>
-  .card-content i {
-    font-size: 48px;
-    color: white;
-  }
+ <?php include_once"css/main.css" ?>
 
-  .card-content h5 {
-    margin-top: 0;
-    color: white;
-  }
-
-  .card-action {
-    text-align: center;
-    padding-bottom: 10px;
-  }
-
-  .card-action {
-    text-align: center;
-    padding-bottom: 10px;
-    transition: all 0.3s ease;
-    /* Transição suave */
-  }
-
-  .card-action:hover {
-    transform: translateY(-5px);
-    /* Levanta o card */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    /* Adiciona uma sombra mais forte */
-    background-color: none;
-    /* Remove o fundo preto */
-  }
-
-  .custom-card {
-    transition: all 0.3s ease;
-    /* Transição suave para o card */
-  }
-
-  .custom-card:hover {
-    transform: scale(1.05);
-    /* Aumenta levemente o card */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    /* Sombra mais visível */
-  }
-
-
-
-  .custom-card {
-    height: 200px;
-  }
+ 
 </style>
 
 <body class="white">
@@ -123,11 +78,11 @@ if (isset($_SESSION['login'])) {
             </div>
 
             <!-- Campo Turma -->
-            <div class="input-field">
+           <div class="input-field">
               <i class="material-icons prefix"></i>
               <textarea id="turma" name="turma" class="materialize-textarea" required></textarea>
               <label for="turma">Turma</label>
-            </div>
+            </div> 
 
             <!-- Campo Motivo -->
             <div class="input-field">
@@ -399,10 +354,18 @@ if (isset($_SESSION['login'])) {
       <h5>Alunos</h5>
     </div>
     <div class="card-action">
-      <a href="#" class="white-text">Acessar</a>
+      <a href="alunos.php" class="white-text">Acessar</a>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
 
 <div class="col s12 m6 l4">
   <div class="card cyan darken-2 custom-card">

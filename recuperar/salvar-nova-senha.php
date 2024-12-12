@@ -1,23 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Document</title>
+    <title>Resultado da Recuperação</title>
+    <!-- Importando o Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Ícones do Materialize -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<body>
-
-</body>
-
-</html>
-<?php
-$email = $_POST['email'];
-$token = $_POST['token'];
-$senha = $_POST['senha'];
-$repetirSenha = $_POST['repetirSenha'];
+<body class="green lighten-4">
+    <div class="container">
+        <div class="row center-align" style="margin-top: 50px;">
+            <div class="col s12 m8 offset-m2">
+                <div class="card z-depth-3">
+                    <div class="card-content">
+                        <span class="card-title green-text text-darken-3">Recuperação de Senha</span>
+                        <div class="result-message">
+                            <?php
+                            $email = $_POST['email'];
+                            $token = $_POST['token'];
+                            $senha = $_POST['senha'];
+                            $repetirSenha = $_POST['repetirSenha'];
 
 require_once "conexao.php";
 $conexao = conectar();

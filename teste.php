@@ -1,203 +1,550 @@
+<?php session_start();
+$login = "";
+if (isset($_SESSION['login'])) {
+  $login = $_SESSION['login'];
+  unset($_SESSION['login']);
+}
+?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="css/login.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="shortcut icon" href="img/user.png">
-    <link href="css/bootstrap.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
-    <title>LOGIN</title>
-    <style>
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-box {
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .header-text {
-            text-align: left;
-        }
-
-        .header-text h1 {
-            font-size: 3em;
-            margin: 0;
-        }
-
-        .header-text p {
-            font-size: 1.2em;
-        }
-
-        .header-logo {
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-            position: absolute;
-            top: -10px;
-            right: 50px;
-            width: 200px;
-            height: 160px;
-            background-color: white;
-            border: 5px solid #006f3c;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            z-index: 2;
-            padding: 20px;
-        }
-
-        .header-logo img {
-            width: 100%;
-            height: auto;
-        }
-    </style>
+  <title>Painel de Administração</title>
 </head>
 
-<body>
-    <header>
-        <div class="header-container">
-            <div class="header-text">
-                <h1>SIGAE</h1>
-                <p>Sistema Integrado de Gerenciamento da Assistência Estudantil</p>
+<?php include_once "header.php"; ?>
+
+<style>
+ <?php include_once"css/main.css" ?>
+
+ 
+</style>
+
+<body class="white">
+  <div class="container center-align">
+    <h1>Bem-vindo ao Painel de Administração do IFFar</h1>
+    <div class="row">
+
+      <!--ENTRADA-->
+      <?php if ($_SESSION['Perfil'] == 1) { ?>
+        <div class="col s12 m6 l4">
+          <div class="card blue darken-2 custom-card">
+            <div class="card-content white-text">
+              <i class="fas fa-sign-in-alt"></i>
+
+              <h5>Entrada em atraso</h5>
             </div>
-            <div class="header-logo">
-                <img class="right" src="img/assistencia_estudantil.png" alt="Logo da Assistência Estudantil">
+        
+              <a href="#modal-entrada" class="white-text modal-trigger">
+              <div class="card-action">
+              ACESSAR
             </div>
+            </a>
+          </div>
         </div>
-    </header>
+      <?php } ?>
 
-    <div class="login-container">
-        <div class="login-box">
-            <!-- Formulário de Login -->
-            <div id="login-form">
-                <div class="col s12 m8 offset-m2 l6 offset-l3">
-                    <form action="login.php" method="POST">
-                        <h5 class="center-align">LOGIN</h5>
-
-                        <div class="input-field">
-                            <input type="text" id="SIAPE" name="SIAPE" class="validate" required autofocus>
-                            <label for="SIAPE">SIAPE</label>
-                        </div>
-
-                        <div class="input-field senha-container">
-                            <input type="password" id="senha" name="senha" class="validate" required>
-                            <label for="senha">SENHA</label>
-                            <img id="olho" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SvW3DMBBGbwQVKlyo4BGC4FKFS4+TATKCNxAggkeoSpHSRQbwAB7AA7hQoUKFLH6E2qQQHfgHdpo0yQHX8T3exyPR/ytlQ8kOhgV7FvSx9+xglA3lM3DBgh0LPn/onbJhcQ0bv2SHlgVgQa/suFHVkCg7bm5gzB2OyvjlDFdDcoa19etZMN8Qp7oUDPEM2KFV1ZAQO2zPMBERO7Ra4JQNpRa4K4FDS0R0IdneCbQLb4/zh/c7QdH4NL40tPXrovFpjHQr6PJ6yr5hQV80PiUiIm1OKxZ0LICS8TWvpyyOf2DBQQtcXk8Zi3+JcKfNafVsjZ0WfGgJlZZQxZjdwzX+ykf6u/UF0Fwo5Apfcq8AAAAASUVORK5CYII=" />
-                        </div>
-
-                        <button class="btn waves-effect waves-light green" type="submit">Logar</button>
-
-                        <div class="row">
-                            <div class="col s12">
-                                <a href="#" class="btn waves-effect waves-light blue" onclick="showRegister()">Cadastrar-se</a>
-                            </div>
-                            <div class="col s12">
-                                <a href="recuperar_senha.php" class="btn waves-effect waves-light orange">Recuperar</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+      <div id="modal-entrada" class="modal">
+        <div class="modal-content">
+          <h4 class="center-align">Registrar Entrada Em Atraso</h4>
+          <form id="form-entrada">
+            <!-- Campo Nome -->
+            <div class="input-field">
+              <i class="material-icons prefix"></i>
+              <input type="text" id="nome" name="nome" required>
+              <label for="nome">Nome completo</label>
             </div>
 
-            <!-- Formulário de Cadastro -->
-            <div id="register-form" style="display: none;">
-                <div class="col s12 m8 offset-m2 l6 offset-l3">
-                    <form action="crud/cadastrar.php" method="POST">
-                        <h5 class="center-align">CADASTRAR-SE</h5>
-
-                        <div class="input-field">
-                            <input type="text" id="nome" name="Nome" class="validate" required autofocus>
-                            <label for="nome">Nome</label>
-                        </div>
-                        <div class="input-field">
-                            <input type="text" id="SIAPE" name="SIAPE" class="validate" required>
-                            <label for="SIAPE">SIAPE</label>
-                        </div>
-
-                        <div class="input-field senha-container">
-                            <input type="password" id="senha" name="Senha" class="validate" required>
-                            <label for="senha">Senha</label>
-                            <img id="olho" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SvW3DMBBGbwQVKlyo4BGC4FKFS4+TATKCNxAggkeoSpHSRQbwAB7AA7hQoUKFLH6E2qQQHfgHdpo0yQHX8T3exyPR/ytlQ8kOhgV7FvSx9+xglA3lM3DBgh0LPn/onbJhcQ0bv2SHlgVgQa/suFHVkCg7bm5gzB2OyvjlDFdDcoa19etZMN8Qp7oUDPEM2KFV1ZAQO2zPMBERO7Ra4JQNpRa4K4FDS0R0IdneCbQLb4/zh/c7QdH4NL40tPXrovFpjHQr6PJ6yr5hQV80PiUiIm1OKxZ0LICS8TWvpyyOf2DBQQtcXk8Zi3+JcKfNafVsjZ0WfGgJlZZQxZjdwzX+ykf6u/UF0Fwo5Apfcq8AAAAASUVORK5CYII=" />
-                        </div>
-
-                        <div class="input-field">
-                            <select id="Perfil" name="Perfil" required>
-                                <option value="" disabled selected>Selecione a Categoria</option>
-                                <option value="1">Coordenação</option>
-                                <option value="2">Nutricionista</option>
-                                <option value="3">Psicóloga</option>
-                                <option value="4">enfermeira</option>
-                                <option value="5">Médico</option>
-                            </select>
-                        </div>
-
-                        <div class="row">
-                            <div class="col s12">
-                                <button type="submit" class="btn waves-effect waves-light blue">Cadastrar</button>
-                            </div>
-                            <div class="col s12">
-                                <a href="#" class="btn waves-effect waves-light green" onclick="showLogin()">Logar</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <!-- Campo Data -->
+            <div class="input-field">
+              <i class="material-icons prefix"></i>
+              <input type="date" id="data" name="data" required>
+              <label for="data">Data</label>
             </div>
-        </div>
+
+            <!-- Campo Horário -->
+            <div class="input-field">
+              <i class="material-icons prefix"></i>
+              <input type="time" id="horario" name="horario" required>
+              <label for="horario">Horário</label>
+            </div>
+
+            <!-- Campo Turma -->
+           <div class="input-field">
+            <i class="material-icons prefix"></i>
+        <select id="turma" name="turma" required>
+            <option value="" disabled selected>Selecione a Turma</option>
+            <option value="turma1">Info 11</option>
+            <option value="turma2">Info 12</option>
+            <option value="turma3">Info 13</option>
+            <option value="turma1">Info 21</option>
+            <option value="turma2">Info 22</option>
+            <option value="turma3">Info 23</option>
+            <option value="turma1">Info 31</option>
+            <option value="turma2">Info 32</option>
+            <option value="turma3">Info 13</option>
+            <!-- Adicione mais opções conforme necessário -->
+        </select>
+        <label for="turma">Turma</label>
     </div>
 
-    <?php include_once "footer.php"; ?>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        // Função para mostrar o formulário de cadastro
-        function showRegister() {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'block';
-        }
-
-        // Função para mostrar o formulário de login
-        function showLogin() {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('register-form').style.display = 'none';
-        }
-
-        $(document).ready(function() {
-            $('#olho').click(function(e) {
-                e.preventDefault();
-                var senha = $('#senha');
-
-                if (senha.attr('type') === 'password') {
-                    senha.attr('type', 'text');
-                    $(this).css('opacity', '0.8');
-                } else {
-                    senha.attr('type', 'password');
-                    $(this).css('opacity', '0.6');
-                }
-            });
-
-            // Inicialização do seletor
-            $('select').formSelect();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializa o select
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
         });
     </script>
-</body>
+
+
+
+            <!-- Campo Motivo -->
+            <div class="input-field">
+              <i class="material-icons prefix"></i>
+              <textarea id="motivo" name="motivo" class="materialize-textarea" required></textarea>
+              <label for="motivo">Motivo do atraso</label>
+            </div>
+
+            <!-- Campo Matricula -->
+            <div class="input-field">
+              <i class="material-icons prefix"></i>
+              <textarea id="matricula" name="matricula" class="materialize-textarea" required></textarea>
+              <label for="matricula">Matricula</label>
+            </div>
+
+
+
+
+            <!-- Botão Registrar -->
+            <div class="center-align">
+              <button type="submit" class="btn waves-effect waves-light">
+                <i class="material-icons left"></i>Registrar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Rodapé do Modal -->
+        <div class="modal-footer">
+          <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
+            <i class="material-icons left"></i>Fechar
+          </a>
+        </div>
+      </div>
+
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          // Inicializa os modais
+          M.Modal.init(document.querySelectorAll('.modal'));
+
+          // Envio do formulário via AJAX
+          const formEntrada = document.getElementById('form-entrada');
+          formEntrada?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+              const formData = new FormData(formEntrada);
+              const response = await fetch('botoesmain/salvar_entrada.php', {
+                method: 'POST',
+                body: formData
+              });
+              const data = await response.text();
+              Swal.fire('Sucesso!', data, 'success');
+              M.Modal.getInstance(document.querySelector('#modal-entrada')).close();
+              formEntrada.reset();
+            } catch {
+              Swal.fire('Erro!', 'Houve um problema ao salvar a entrada.', 'error');
+            }
+          });
+
+          // Exibe alerta de login, se necessário
+          <?php if ($login != "") { ?>
+            Swal.fire(<?= json_encode($login) ?>);
+          <?php } ?>
+        });
+      </script>
 
 </html>
+<!-- FIM da ENTRADA -->
+
+
+
+
+
+
+
+<!-- SAÍDA -->
+<div class="col s12 m6 l4">
+  <div class="card pink darken-2 custom-card">
+    <div class="card-content white-text">
+      <i class="fas fa-sign-out-alt"></i>
+      <h5>Saída fora de horário</h5>
+    </div>
+   
+      <a href="#modal-saida" class="white-text modal-trigger">
+      <div class="card-action">
+    ACESSAR
+    </div>
+  </a>
+  </div>
+</div>
+
+<!-- Modal de Saída -->
+<div id="modal-saida" class="modal">
+  <div class="modal-content">
+    <h4 class="center-align">Registrar Saída Fora de Horário</h4>
+    <form id="form-saida">
+      <!-- Campo Nome -->
+      <div class="input-field">
+        <i class="material-icons prefix"></i>
+        <input type="text" id="nome" name="nome" required>
+        <label for="nome">Nome completo</label>
+      </div>
+
+      <!-- Campo Data -->
+      <div class="input-field">
+        <i class="material-icons prefix"></i>
+        <input type="date" id="data" name="data" required>
+        <label for="data">Data</label>
+      </div>
+
+      <!-- Campo Horário -->
+      <div class="input-field">
+        <i class="material-icons prefix"></i>
+        <input type="time" id="horario" name="horario" required>
+        <label for="horario">Horário</label>
+      </div>
+
+      <!-- Campo turma -->
+      <div class="input-field">
+        <i class="material-icons prefix"></i>
+        <textarea id="turma" name="turma" class="materialize-textarea" required></textarea>
+        <label for="turma">Turma</label>
+      </div>
+
+      <!-- Campo Motivo -->
+      <div class="input-field">
+        <i class="material-icons prefix"></i>
+        <textarea id="motivo" name="motivo" class="materialize-textarea" required></textarea>
+        <label for="motivo">Motivo da saída fora de horário</label>
+      </div>
+
+      <!-- Campo matricula -->
+      <div class="input-field">
+        <i class="material-icons prefix"></i>
+        <textarea id="matricula" name="matricula" class="materialize-textarea" required></textarea>
+        <label for="matricula">matricula</label>
+      </div>
+
+      <input type="hidden" name="tipo" value="saida">
+
+      <!-- Botão Registrar -->
+      <div class="center-align">
+        <button type="submit" class="btn waves-effect waves-light">
+          <i class="material-icons left"></i>Registrar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Rodapé do Modal -->
+  <div class="modal-footer">
+    <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
+      <i class="material-icons left"></i>Fechar
+    </a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa os modais
+    M.Modal.init(document.querySelectorAll('.modal'));
+
+    // Envio do formulário via AJAX
+    const formSaida = document.getElementById('form-saida');
+    formSaida?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const formData = new FormData(formSaida);
+        const response = await fetch('botoesmain/salvar_saida.php', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.text();
+        Swal.fire('Sucesso!', data, 'success');
+        M.Modal.getInstance(document.querySelector('#modal-saida')).close();
+        formSaida.reset();
+      } catch {
+        Swal.fire('Erro!', 'Houve um problema ao salvar a saída.', 'error');
+      }
+    });
+
+
+  });
+</script>
+
+<!-- FIM da SAÍDA -->
+
+
+<!--relatorio-->
+
+
+
+<div class="col s12 m6 l4">
+  <div class="card orange darken-2 custom-card">
+    <div class="card-content white-text">
+      <i class="fas fa-file-alt"></i>
+      <h5>Relatorio_diario</h5>
+    </div>
+
+      <a href="#modal_relatorio_diario" class="white-text modal-trigger">
+      <div class="card-action">
+      ACESSAR
+      </div>
+    </a>    
+  
+  </div>
+</div>
+
+
+
+
+
+<!-- Modal de Relatório -->
+<div id="modal_relatorio_diario" class="modal">
+  <div class="modal-content">
+    <h4 class="center-align">Relatorio_diario </h4>
+
+    <!-- Barra de Pesquisa -->
+    <div class="input-field">
+      <i class="material-icons prefix"></i>
+      <input type="text" id="busca-Relatorio_diario" placeholder="Digite para buscar (nome, matrícula, turma)">
+    </div>
+
+
+    <!-- Tabela de Resultados -->
+    <table class="highlight">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Matrícula</th>
+          <th>Turma</th>
+          <th>Tipo</th>
+          <th>Data</th>
+          <th>Horário</th>
+          <th>Motivo</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-Relatorio_diario">
+        <!-- Os dados serão carregados aqui via AJAX -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Rodapé do Modal -->
+  <div class="modal-footer">
+    <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
+      <i class="material-icons left"></i>Fechar
+    </a>
+  </div>
+</div>
+
+<div class="col s12 m6 l4">
+  <div class="card grey darken-2 custom-card">
+    <div class="card-content white-text">
+      <i class="fas fa-calendar-alt"></i>
+      <h5>Agendamentos</h5>
+    </div>
+    <div class="card-action">
+      <a href="#" class="white-text">Acessar</a>
+    </div>
+  </div>
+</div>
+
+<div class="col s12 m6 l4">
+  <div class="card green darken-2 custom-card">
+    <div class="card-content white-text">
+      <i class="fas fa-user-graduate"></i>
+      <h5>Alunos</h5>
+    </div>
+    <div class="card-action">
+      <a href="#" class="white-text">Acessar</a>
+    </div>
+  </div>
+</div>
+
+<div class="col s12 m6 l4">
+  <div class="card cyan darken-2 custom-card">
+    <div class="card-content white-text">
+      <i class="fas fa-file-alt"></i>
+      <h5>Relatorio</h5>
+    </div>
+    <a href="#modal-Relatorio" class="white-text modal-trigger">
+      <div class="card-action">
+        ACESSAR
+      </div>
+    </a>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- Modal de Relatório -->
+<div id="modal-Relatorio" class="modal">
+  <div class="modal-content">
+    <h4 class="center-align">Relatorio </h4>
+
+    <!-- Barra de Pesquisa -->
+    <div class="input-field">
+      <i class="material-icons prefix"></i>
+      <input type="text" id="busca-Relatorio" placeholder="Digite para buscar (nome, matrícula, turma)">
+    </div>
+
+    <!-- Tabela de Resultados -->
+    <table class="highlight">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Matrícula</th>
+          <th>Turma</th>
+          <th>Tipo</th>
+          <th>Data</th>
+          <th>Horário</th>
+          <th>Motivo</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-Relatorio">
+        <!-- Os dados serão carregados aqui via AJAX -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Rodapé do Modal -->
+  <div class="modal-footer">
+    <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
+      <i class="material-icons left"></i>Fechar
+    </a>
+  </div>
+</div>
+
+<?php include_once "footer.php" ?>
+
+<script>
+  <?php if ($login != "") { ?>
+    window.addEventListener("load", (event) => {
+      Swal.fire(
+        <?= json_encode($login) ?>
+      )
+    })
+  <?php } ?>
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa os modais
+    const modals = M.Modal.init(document.querySelectorAll('.modal'), {
+      onOpenStart: (modalElement) => {
+        if (modalElement.id === 'modal_relatorio_diario') {
+          carregarRelatorio_diario(); // Carrega os dados do Relatório Diário quando o modal é aberto
+        } else if (modalElement.id === 'modal-Relatorio') {
+          carregarRelatorio(); // Carrega os dados do Relatório quando o modal é aberto
+        }
+      }
+    });
+
+    // Função para carregar os dados do Relatório Diário
+    const carregarRelatorio_diario = async (busca = '') => {
+      try {
+        const response = await fetch(`botoesmain/relatorio_diario.php?busca=${encodeURIComponent(busca)}`);
+        if (!response.ok) {
+          throw new Error('Erro na resposta do servidor');
+        }
+        const registros = await response.json();
+
+        const tabela = document.getElementById('tabela-Relatorio_diario');
+        tabela.innerHTML = ''; // Limpa a tabela
+
+        // Popula a tabela com os registros
+        if (registros.length > 0) {
+          registros.forEach((registro) => {
+            tabela.innerHTML += `
+            <tr>
+              <td>${registro.nome}</td>
+              <td>${registro.matricula}</td>
+              <td>${registro.turma}</td>
+              <td>${registro.tipo}</td>
+              <td>${registro.data}</td>
+              <td>${registro.horario}</td>
+              <td>${registro.motivo || '-'}</td>
+            </tr>
+          `;
+          });
+        } else {
+          tabela.innerHTML = `
+          <tr>
+            <td colspan="7" class="center-align">Nenhum registro encontrado</td>
+          </tr>
+        `;
+        }
+      } catch (error) {
+        console.error('Erro ao carregar o relatório diário:', error);
+      }
+    };
+
+    // Função para carregar os dados do Relatório
+    const carregarRelatorio = async (busca = '') => {
+      try {
+        const response = await fetch(`botoesmain/relatorio.php?busca=${encodeURIComponent(busca)}`);
+        if (!response.ok) {
+          throw new Error('Erro na resposta do servidor');
+        }
+        const registros = await response.json();
+
+        const tabela = document.getElementById('tabela-Relatorio');
+        tabela.innerHTML = ''; // Limpa a tabela
+
+        // Popula a tabela com os registros
+        if (registros.length > 0) {
+          registros.forEach((registro) => {
+            tabela.innerHTML += `
+            <tr>
+              <td>${registro.nome}</td>
+              <td>${registro.matricula}</td>
+              <td>${registro.turma}</td>
+              <td>${registro.tipo}</td>
+              <td>${registro.data}</td>
+              <td>${registro.horario}</td>
+              <td>${registro.motivo || '-'}</td>
+            </tr>
+          `;
+          });
+        } else {
+          tabela.innerHTML = `
+          <tr>
+            <td colspan="7" class="center-align">Nenhum registro encontrado</td>
+          </tr>
+        `;
+        }
+      } catch (error) {
+        console.error('Erro ao carregar o relatório:', error);
+      }
+    };
+
+    // Evento para buscar enquanto digita no campo de pesquisa
+    const buscaInputDiario = document.getElementById('busca-Relatorio_diario');
+    buscaInputDiario.addEventListener('input', () => {
+      carregarRelatorio_diario(buscaInputDiario.value);
+    });
+
+    const buscaInputRelatorio = document.getElementById('busca-Relatorio');
+    buscaInputRelatorio.addEventListener('input', () => {
+      carregarRelatorio(buscaInputRelatorio.value);
+    });
+  });
+</script>

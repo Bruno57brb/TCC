@@ -7,70 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="shortcut icon" href="img/user.png">
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../img/user.png">
+    <link href="../css/bootstrap.css" rel="stylesheet">
 
     <title>LOGIN</title>
     <style>
-        .cad-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .cad-box {
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .header-text {
-            text-align: left;
-        }
-
-        .header-text h1 {
-            font-size: 3em;
-            margin: 0;
-        }
-
-        .header-text p {
-            font-size: 1.2em;
-        }
-
-        .header-logo {
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-            position: absolute;
-            top: -10px;
-            right: 50px;
-            width: 200px;
-            height: 160px;
-            background-color: white;
-            border: 5px solid #006f3c;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            z-index: 2;
-            padding: 20px;
-        }
-
-        .header-logo img {
-            width: 100%;
-            height: auto;
-        }
-    </style>
-</head>
+ <?php
+     include_once"../css/cadastrar_servidor.css";
+   ?>
+   </style>
+</s>
 
 <body>
     <header>
@@ -80,7 +28,7 @@
                 <p>Sistema Integrado de Gerenciamento da Assistência Estudantil</p>
             </div>
             <div class="header-logo">
-                <img class="right" src="img/assistencia_estudantil.png" alt="Logo da Assistência Estudantil">
+                <img class="right" src="../img/assistencia_estudantil.png" alt="Logo da Assistência Estudantil">
             </div>
         </div>
     </header>
@@ -89,7 +37,7 @@
         <div class="cad-box">
                
                 <div class="col s12 m8 offset-m2 l6 offset-l3">
-                    <form action="crud/cadastrar.php" method="POST">
+                    <form action="cadastrar-servidor.php" method="POST">
                         <h5 class="center-align">CADASTRAR-SE</h5>
 
                         <div class="input-field">
@@ -127,7 +75,7 @@
                                 <button type="submit" class="btn waves-effect waves-light blue">Cadastrar</button>
                             </div>
                             <div class="col s12">
-                                <a href="main.php" class="btn waves-effect waves-light green" onclick="showLogin()">voltar</a>
+                                <a href="../main.php" class="btn waves-effect waves-light green" onclick="showLogin()">voltar</a>
                             </div>
                         </div>
                     </form>
@@ -135,8 +83,41 @@
             </div>
         </div>
     </div>
+<<?php
+// Conexão com o banco de dados
+$conexao = mysqli_connect("localhost", "root", "", "assistencia");
 
-    <?php include_once "footer.php"; ?>
+// Verifica se a conexão foi bem-sucedida
+if (!$conexao) {
+    die("Conexão falhou: " . mysqli_connect_error());
+}
+
+// Verifica se o método de requisição é POST
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Escapa as entradas para evitar SQL Injection
+    $nome = mysqli_real_escape_string($conexao, $_POST['Nome']);
+    $SIAPE = mysqli_real_escape_string($conexao, $_POST['SIAPE']);
+    $email = mysqli_real_escape_string($conexao, $_POST['Email']);
+    $senha = mysqli_real_escape_string($conexao, $_POST['Senha']);
+    $perfil = mysqli_real_escape_string($conexao, $_POST['Perfil']);
+
+    // Hash da senha
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+    // Inserir no banco de dados
+    $sql = "INSERT INTO usuario (Nome, SIAPE, Email, senha, Perfil) VALUES ('{$nome}', '{$SIAPE}', '{$email}', '{$senha_hash}', '{$perfil}')";
+    
+    if (mysqli_query($conexao, $sql)) {
+        echo "Usuário registrado com sucesso!";
+    } else {
+        echo "Erro ao registrar usuário: " . mysqli_error($conexao);
+    }
+}
+
+// Fecha a conexão
+mysqli_close($conexao);
+?>
+    <?php include_once "../footer2.php"; ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
