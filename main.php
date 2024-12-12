@@ -280,7 +280,7 @@ if (isset($_SESSION['login'])) {
   <div class="card orange darken-2 custom-card">
     <div class="card-content white-text">
       <i class="fas fa-file-alt"></i>
-      <h5>Relatorio_diario</h5>
+      <h5>Relatorio Diario</h5>
     </div>
 
       <a href="#modal_relatorio_diario" class="white-text modal-trigger">
@@ -296,17 +296,45 @@ if (isset($_SESSION['login'])) {
 
 
 
-<!-- Modal de Relatório -->
+<!-- Modal de Relatório Diário com Filtros -->
 <div id="modal_relatorio_diario" class="modal">
   <div class="modal-content">
-    <h4 class="center-align">Relatorio_diario </h4>
+    <h4 class="center-align">Relatório Diário</h4>
 
-    <!-- Barra de Pesquisa -->
-    <div class="input-field">
-      <i class="material-icons prefix"></i>
-      <input type="text" id="busca-Relatorio_diario" placeholder="Digite para buscar (nome, matrícula, turma)">
+    <!-- Filtros -->
+    <div class="row">
+      <div class="input-field col s12 m6 l3">
+        <select id="filtro-nome">
+          <option value="" disabled selected>Filtrar por Nome</option>
+          <!-- Opções serão carregadas dinamicamente -->
+        </select>
+      </div>
+      <div class="input-field col s12 m6 l3">
+        <select id="filtro-matricula">
+          <option value="" disabled selected>Filtrar por Matrícula</option>
+          <!-- Opções serão carregadas dinamicamente -->
+        </select>
+      </div>
+      <div class="input-field col s12 m6 l3">
+        <select id="filtro-turma">
+          <option value="" disabled selected>Filtrar por Turma</option>
+          <!-- Opções serão carregadas dinamicamente -->
+        </select>
+      </div>
+      <div class="input-field col s12 m6 l3">
+        <input type="date" id="filtro-data-inicial" placeholder="Data Inicial">
+      </div>
+      <div class="input-field col s12 m6 l3">
+        <input type="date" id="filtro-data-final" placeholder="Data Final">
+      </div>
     </div>
 
+    <!-- Botão de Aplicar Filtros -->
+    <div class="center-align">
+      <button id="aplicar-filtros" class="btn waves-effect waves-light">
+        <i class="material-icons left">filter_list</i>Aplicar Filtros
+      </button>
+    </div>
 
     <!-- Tabela de Resultados -->
     <table class="highlight">
@@ -335,6 +363,100 @@ if (isset($_SESSION['login'])) {
   </div>
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa selects do Materialize
+    const selects = document.querySelectorAll('select');
+    M.FormSelect.init(selects);
+
+    // Função para carregar as opções dos filtros
+    const carregarOpcoesFiltros = async () => {
+      try {
+        const response = await fetch('botoesmain/obter_opcoes_filtros.php');
+        if (!response.ok) throw new Error('Erro ao obter opções de filtros');
+        const { nomes, matriculas, turmas } = await response.json();
+
+        const filtroNome = document.getElementById('filtro-nome');
+        nomes.forEach(nome => {
+          filtroNome.innerHTML += `<option value="${nome}">${nome}</option>`;
+        });
+
+        const filtroMatricula = document.getElementById('filtro-matricula');
+        matriculas.forEach(matricula => {
+          filtroMatricula.innerHTML += `<option value="${matricula}">${matricula}</option>`;
+        });
+
+        const filtroTurma = document.getElementById('filtro-turma');
+        turmas.forEach(turma => {
+          filtroTurma.innerHTML += `<option value="${turma}">${turma}</option>`;
+        });
+
+        // Re-inicializa os selects do Materialize
+        M.FormSelect.init(selects);
+      } catch (error) {
+        console.error('Erro ao carregar opções de filtros:', error);
+      }
+    };
+
+    // Função para carregar o relatório diário com filtros
+    const carregarRelatorioDiario = async (filtros = {}) => {
+      try {
+        const query = new URLSearchParams(filtros).toString();
+        const response = await fetch(`botoesmain/relatorio_diario.php?${query}`);
+        if (!response.ok) throw new Error('Erro na resposta do servidor');
+
+        const registros = await response.json();
+        const tabela = document.getElementById('tabela-Relatorio_diario');
+        tabela.innerHTML = ''; // Limpa a tabela
+
+        if (registros.length > 0) {
+          registros.forEach(registro => {
+            tabela.innerHTML += `
+              <tr>
+                <td>${registro.nome}</td>
+                <td>${registro.matricula}</td>
+                <td>${registro.turma}</td>
+                <td>${registro.tipo}</td>
+                <td>${registro.data}</td>
+                <td>${registro.horario}</td>
+                <td>${registro.motivo || '-'}</td>
+              </tr>
+            `;
+          });
+        } else {
+          tabela.innerHTML = `
+            <tr>
+              <td colspan="7" class="center-align">Nenhum registro encontrado</td>
+            </tr>
+          `;
+        }
+      } catch (error) {
+        console.error('Erro ao carregar o relatório diário:', error);
+      }
+    };
+
+    // Evento para aplicar filtros ao clicar no botão
+    document.getElementById('aplicar-filtros').addEventListener('click', () => {
+      const filtros = {
+        nome: document.getElementById('filtro-nome').value,
+        matricula: document.getElementById('filtro-matricula').value,
+        turma: document.getElementById('filtro-turma').value,
+        data_inicial: document.getElementById('filtro-data-inicial').value,
+        data_final: document.getElementById('filtro-data-final').value,
+      };
+      carregarRelatorioDiario(filtros);
+    });
+
+    // Carrega as opções dos filtros ao abrir o modal
+    M.Modal.init(document.querySelectorAll('.modal'), {
+      onOpenStart: () => {
+        carregarOpcoesFiltros();
+        carregarRelatorioDiario();
+      },
+    });
+  });
+</script>
+  
 <div class="col s12 m6 l4">
   <div class="card grey darken-2 custom-card">
     <div class="card-content white-text">

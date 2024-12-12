@@ -5,6 +5,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
     <?php
@@ -15,8 +20,8 @@
     ?>
 
     <main class="container">
-        <h1>Clientes</h1>
-        <a href='forminsere.php' class="brown lighten-3 waves-effect waves-light btn">
+        <h1>Alunos</h1>
+        <a href='crud/cadastrar_aluno.php' class="green waves-effect waves-light btn">
             <i class="material-icons right">add</i>Inserir
         </a>
 
@@ -78,14 +83,38 @@
         </table>
 
         <br>
-        <a href='relatorio.php' class="brown lighten-3 waves-effect waves-light btn">
+        <a href='relatorio.php' class="blue waves-effect waves-light btn">
             <i class="material-icons right">add</i>Gerar relatório
         </a>
         <a href='main.php' class="red 3 waves-effect waves-light btn right">
             <i class="material-icons right">arrow_back</i>Voltar
         </a>
     </main>
+    <style>
+    html, body {
+    height: 100%; /* Faz com que o conteúdo ocupe 100% da altura da janela */
+    margin: 0; /* Remove margens padrão */
+    display: flex;
+    flex-direction: column; /* Define direção da coluna para manter footer no final */
+}
 
+main {
+    flex: 1; /* Faz o main crescer para ocupar o espaço restante */
+}
+
+footer {
+    background-color: #4caf50; /* Cor de fundo do footer */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+</style>
+    <?php
+include_once"footer.php";
+?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -100,5 +129,9 @@
             });
         });
     </script>
+
+
+
 </body>
+
 </html>
