@@ -354,10 +354,18 @@ if (isset($_SESSION['login'])) {
       <h5>Alunos</h5>
     </div>
     <div class="card-action">
-      <a href="#" class="white-text">Acessar</a>
+      <a href="alunos.php" class="white-text">Acessar</a>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
 
 <div class="col s12 m6 l4">
   <div class="card cyan darken-2 custom-card">
