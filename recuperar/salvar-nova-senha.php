@@ -1,3 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
 <?php
 $email = $_POST['email'];
 $token = $_POST['token'];
@@ -6,55 +21,98 @@ $repetirSenha = $_POST['repetirSenha'];
 
 require_once "conexao.php";
 $conexao = conectar();
-$sql = "SELECT * FROM `recuperar_senha` WHERE email='$email' AND 
-        token='$token'";
+$sql = "SELECT * FROM `recuperar_senha` WHERE email='$email' AND token='$token'";
 $resultado = executarSQL($conexao, $sql);
 $recuperar = mysqli_fetch_assoc($resultado);
 
 if ($recuperar == null) {
-    echo "Email ou token incorreto. Tente fazer um novo pedido 
-          de recuperação de senha.";
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            text: 'Email ou token incorreto. Tente fazer um novo pedido de recuperação de senha.',
+            confirmButtonText: 'Ok'
+        }).then(() => {
+            window.location.href = '../index.php';
+        });
+    </script>";
     die();
-} else {
-    // verificar a validade do pedido (data_criacao)
-    // verificar se o link jah foi usado
-    date_default_timezone_set('America/Sao_Paulo');
-    $agora = new DateTime('now');
-    $data_criacao = DateTime::createFromFormat(
-        'Y-m-d H:i:s',
-        $recuperar['data_criacao']
-    );
-    $umDia = DateInterval::createFromDateString('1 day');
-    $dataExpiracao = date_add($data_criacao, $umDia);
-
-    if ($agora > $dataExpiracao) {
-        echo "Essa solicitação de recuperação de senha expirou!
-              Faça um novo pedido de recuperação de senha.";
-        die();
-    }
-
-    if ($recuperar['usado'] == 1) {
-        echo "Esse pedido de recuperação de senha já foi utilizado
-        anteriormente! Para recuperar a senha faça um novo pedido
-        de recuperação de senha.";
-        die();
-    }
-
-    if ($senha != $repetirSenha) {
-        echo "A senha que você digitou é diferente da senha que
-              você digitou no repetir senha. Por favor tente 
-              novamente!";
-        die();
-    }
-
-    $sql2 = "UPDATE usuario SET senha='$senha' WHERE 
-             email='$email'";
-    executarSQL($conexao, $sql2);
-    $sql3 = "UPDATE `recuperar_senha` SET usado=1 WHERE 
-             email='$email' AND token='$token'";
-    executarSQL($conexao, $sql3);
-
-    echo "Nova senha cadastrada com sucesso! Faça o login para 
-          acessar o sistema.<br>";
-    echo "<a href='index.php'>Acessar sistema</a>";
 }
+
+// Verificar a validade do pedido (data_criacao) e se já foi usado
+date_default_timezone_set('America/Sao_Paulo');
+$agora = new DateTime('now');
+$data_criacao = DateTime::createFromFormat('Y-m-d H:i:s', $recuperar['data_criacao']);
+$umDia = DateInterval::createFromDateString('1 day');
+$dataExpiracao = date_add($data_criacao, $umDia);
+
+if ($agora > $dataExpiracao) {
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Link expirado!',
+            text: 'Essa solicitação de recuperação de senha expirou! Faça um novo pedido de recuperação de senha.',
+            confirmButtonText: 'Ok'
+        }).then(() => {
+            window.location.href = '../index.php';
+        });
+    </script>";
+    die();
+}
+
+if ($recuperar['usado'] == 1) {
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Link já utilizado!',
+            text: 'Esse pedido de recuperação de senha já foi utilizado anteriormente! Para recuperar a senha faça um novo pedido de recuperação de senha.',
+            confirmButtonText: 'Ok'
+        }).then(() => {
+            window.location.href = '../index.php';
+        });
+    </script>";
+    die();
+}
+
+if ($senha != $repetirSenha) {
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            text: 'As senhas não conferem. Por favor, tente novamente.',
+            confirmButtonText: 'Ok'
+        }).then(() => {
+            window.history.back();
+        });
+    </script>";
+    die();
+}
+
+// Atualizar a senha e marcar o token como usado
+$sql2 = "UPDATE usuario SET senha='$senha' WHERE email='$email'";
+executarSQL($conexao, $sql2);
+
+$sql3 = "UPDATE `recuperar_senha` SET usado=1 WHERE email='$email' AND token='$token'";
+executarSQL($conexao, $sql3);
+
+echo "
+<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: 'Sua senha foi alterada com sucesso! Agora você pode fazer login no sistema.',
+        confirmButtonText: 'Ok'
+    }).then(() => {
+        window.location.href = '/tcc/login.php';
+    });
+</script>";
+?>
