@@ -46,7 +46,7 @@
                         </div>
                         <div class="input-field">
                             <input type="text" id="matricula" name="matricula" class="validate" required>
-                            <label for="matricula">matricula</label>
+                            <label for="matricula">Matricula</label>
                         </div>
 
                         <div class="input-field">
@@ -55,7 +55,7 @@
                         </div>
                         <div class="input-field">
                             <input type="text" id="turma" name="turma" class="validate" required>
-                            <label for="turma">turma</label>
+                            <label for="turma">Turma</label>
                         </div>
                         <div class="input-field">
                             <input type="text" id="CPF" name="CPF" class="validate" required>

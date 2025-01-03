@@ -21,7 +21,8 @@ include_once"css/index.css";
 </head>
 
 <body>
-    <header>
+    <header>  
+          
         <div class="header-container">
             <div class="header-text">
                 <h1>SIGAE</h1>
@@ -31,6 +32,7 @@ include_once"css/index.css";
                 <img class="right" src="img/assistencia_estudantil.png" alt="Logo da Assistência Estudantil">
             </div>
         </div>
+     
     </header>
 
     <div class="login-container">

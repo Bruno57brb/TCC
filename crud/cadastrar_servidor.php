@@ -65,7 +65,7 @@
                                 <option value="1">Coordenação</option>
                                 <option value="2">Nutricionista</option>
                                 <option value="3">Psicóloga</option>
-                                <option value="4">enfermeira</option>
+                                <option value="4">Enfermeira</option>
                                 <option value="5">Médico</option>
                             </select>
                         </div>

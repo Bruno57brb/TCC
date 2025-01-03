@@ -23,7 +23,9 @@ if (isset($_SESSION['login'])) {
 <?php include_once "header.php"; ?>
 
 <style>
-  <?php include_once "css/main.css" ?>
+ <?php include_once"css/main.css" ?>
+
+ 
 </style>
 
 <body class="white">
@@ -40,11 +42,11 @@ if (isset($_SESSION['login'])) {
 
               <h5>Entrada em atraso</h5>
             </div>
-
-            <a href="#modal-entrada" class="white-text modal-trigger">
+        
+              <a href="#modal-entrada" class="white-text modal-trigger">
               <div class="card-action">
-                ACESSAR
-              </div>
+              ACESSAR
+            </div>
             </a>
           </div>
         </div>
@@ -76,11 +78,11 @@ if (isset($_SESSION['login'])) {
             </div>
 
             <!-- Campo Turma -->
-            <div class="input-field">
+           <div class="input-field">
               <i class="material-icons prefix"></i>
               <textarea id="turma" name="turma" class="materialize-textarea" required></textarea>
               <label for="turma">Turma</label>
-            </div>
+            </div> 
 
             <!-- Campo Motivo -->
             <div class="input-field">
@@ -117,7 +119,36 @@ if (isset($_SESSION['login'])) {
       </div>
 
 
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          // Inicializa os modais
+          M.Modal.init(document.querySelectorAll('.modal'));
 
+          // Envio do formulário via AJAX
+          const formEntrada = document.getElementById('form-entrada');
+          formEntrada?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+              const formData = new FormData(formEntrada);
+              const response = await fetch('botoesmain/salvar_entrada.php', {
+                method: 'POST',
+                body: formData
+              });
+              const data = await response.text();
+              Swal.fire('Sucesso!', data, 'success');
+              M.Modal.getInstance(document.querySelector('#modal-entrada')).close();
+              formEntrada.reset();
+            } catch {
+              Swal.fire('Erro!', 'Houve um problema ao salvar a entrada.', 'error');
+            }
+          });
+
+          // Exibe alerta de login, se necessário
+          <?php if ($login != "") { ?>
+            Swal.fire(<?= json_encode($login) ?>);
+          <?php } ?>
+        });
+      </script>
 
 </html>
 <!-- FIM da ENTRADA -->
@@ -135,12 +166,12 @@ if (isset($_SESSION['login'])) {
       <i class="fas fa-sign-out-alt"></i>
       <h5>Saída fora de horário</h5>
     </div>
-
-    <a href="#modal-saida" class="white-text modal-trigger">
+   
+      <a href="#modal-saida" class="white-text modal-trigger">
       <div class="card-action">
-        ACESSAR
-      </div>
-    </a>
+    ACESSAR
+    </div>
+  </a>
   </div>
 </div>
 
@@ -210,7 +241,33 @@ if (isset($_SESSION['login'])) {
   </div>
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa os modais
+    M.Modal.init(document.querySelectorAll('.modal'));
 
+    // Envio do formulário via AJAX
+    const formSaida = document.getElementById('form-saida');
+    formSaida?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const formData = new FormData(formSaida);
+        const response = await fetch('botoesmain/salvar_saida.php', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.text();
+        Swal.fire('Sucesso!', data, 'success');
+        M.Modal.getInstance(document.querySelector('#modal-saida')).close();
+        formSaida.reset();
+      } catch {
+        Swal.fire('Erro!', 'Houve um problema ao salvar a saída.', 'error');
+      }
+    });
+
+
+  });
+</script>
 
 <!-- FIM da SAÍDA -->
 
@@ -223,15 +280,15 @@ if (isset($_SESSION['login'])) {
   <div class="card orange darken-2 custom-card">
     <div class="card-content white-text">
       <i class="fas fa-file-alt"></i>
-      <h5>Relatório Diario</h5>
+      <h5>Relatorio_diario</h5>
     </div>
 
-    <a href="#modal_relatorio_diario" class="white-text modal-trigger">
+      <a href="#modal_relatorio_diario" class="white-text modal-trigger">
       <div class="card-action">
-        ACESSAR
+      ACESSAR
       </div>
-    </a>
-
+    </a>    
+  
   </div>
 </div>
 
@@ -239,45 +296,17 @@ if (isset($_SESSION['login'])) {
 
 
 
-<!-- Modal de Relatório Diário com Filtros -->
+<!-- Modal de Relatório -->
 <div id="modal_relatorio_diario" class="modal">
   <div class="modal-content">
-    <h4 class="center-align">Relatório Diário</h4>
+    <h4 class="center-align">Relatorio_diario </h4>
 
-    <!-- Filtros -->
-    <div class="row">
-      <div class="input-field col s12 m6 l3">
-        <select id="filtro-nome">
-          <option value="" disabled selected>Filtrar por Nome</option>
-          <!-- Opções serão carregadas dinamicamente -->
-        </select>
-      </div>
-      <div class="input-field col s12 m6 l3">
-        <select id="filtro-matricula">
-          <option value="" disabled selected>Filtrar por Matrícula</option>
-          <!-- Opções serão carregadas dinamicamente -->
-        </select>
-      </div>
-      <div class="input-field col s12 m6 l3">
-        <select id="filtro-turma">
-          <option value="" disabled selected>Filtrar por Turma</option>
-          <!-- Opções serão carregadas dinamicamente -->
-        </select>
-      </div>
-      <div class="input-field col s12 m6 l3">
-        <input type="date" id="filtro-data-inicial" placeholder="Data Inicial">
-      </div>
-      <div class="input-field col s12 m6 l3">
-        <input type="date" id="filtro-data-final" placeholder="Data Final">
-      </div>
+    <!-- Barra de Pesquisa -->
+    <div class="input-field">
+      <i class="material-icons prefix"></i>
+      <input type="text" id="busca-Relatorio_diario" placeholder="Digite para buscar (nome, matrícula, turma)">
     </div>
 
-    <!-- Botão de Aplicar Filtros -->
-    <div class="center-align">
-      <button id="aplicar-filtros" class="btn waves-effect waves-light">
-        <i class="material-icons left">filter_list</i>Aplicar Filtros
-      </button>
-    </div>
 
     <!-- Tabela de Resultados -->
     <table class="highlight">
@@ -306,7 +335,6 @@ if (isset($_SESSION['login'])) {
   </div>
 </div>
 
-
 <div class="col s12 m6 l4">
   <div class="card grey darken-2 custom-card">
     <div class="card-content white-text">
@@ -325,13 +353,9 @@ if (isset($_SESSION['login'])) {
       <i class="fas fa-user-graduate"></i>
       <h5>Alunos</h5>
     </div>
-
-    <a href="alunos.php" class="white-text">
-      <div class="card-action">
-        ACESSAR
-
-      </div>
-    </a>
+    <div class="card-action">
+      <a href="alunos.php" class="white-text">Acessar</a>
+    </div>
   </div>
 </div>
 
@@ -347,7 +371,7 @@ if (isset($_SESSION['login'])) {
   <div class="card cyan darken-2 custom-card">
     <div class="card-content white-text">
       <i class="fas fa-file-alt"></i>
-      <h5>Relatório</h5>
+      <h5>Relatorio</h5>
     </div>
     <a href="#modal-Relatorio" class="white-text modal-trigger">
       <div class="card-action">
@@ -362,7 +386,7 @@ if (isset($_SESSION['login'])) {
 <!-- Modal de Relatório -->
 <div id="modal-Relatorio" class="modal">
   <div class="modal-content">
-    <h4 class="center-align">Relatório </h4>
+    <h4 class="center-align">Relatorio </h4>
 
     <!-- Barra de Pesquisa -->
     <div class="input-field">
@@ -399,184 +423,7 @@ if (isset($_SESSION['login'])) {
 
 <?php include_once "footer.php" ?>
 
-
-
-
-
-
-
-
-
-
-
-
 <script>
-  //inicio entrada
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // Inicializa os modais
-    M.Modal.init(document.querySelectorAll('.modal'));
-
-    // Envio do formulário via AJAX
-    const formEntrada = document.getElementById('form-entrada');
-    formEntrada?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      try {
-        const formData = new FormData(formEntrada);
-        const response = await fetch('botoesmain/salvar_entrada.php', {
-          method: 'POST',
-          body: formData
-        });
-        const data = await response.text();
-        Swal.fire('Sucesso!', data, 'success');
-        M.Modal.getInstance(document.querySelector('#modal-entrada')).close();
-        formEntrada.reset();
-      } catch {
-        Swal.fire('Erro!', 'Houve um problema ao salvar a entrada.', 'error');
-      }
-    });
-
-    // Exibe alerta de login, se necessário
-    <?php if ($login != "") { ?>
-      Swal.fire(<?= json_encode($login) ?>);
-    <?php } ?>
-  });
-
-  // final entrada
-
-
-
-// inicio saida
-  document.addEventListener('DOMContentLoaded', () => {
-    // Inicializa os modais
-    M.Modal.init(document.querySelectorAll('.modal'));
-
-    // Envio do formulário via AJAX
-    const formSaida = document.getElementById('form-saida');
-    formSaida?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      try {
-        const formData = new FormData(formSaida);
-        const response = await fetch('botoesmain/salvar_saida.php', {
-          method: 'POST',
-          body: formData
-        });
-        const data = await response.text();
-        Swal.fire('Sucesso!', data, 'success');
-        M.Modal.getInstance(document.querySelector('#modal-saida')).close();
-        formSaida.reset();
-      } catch {
-        Swal.fire('Erro!', 'Houve um problema ao salvar a saída.', 'error');
-      }
-    });
-
-
-  });
-// final saida
-
-
-  //inicio relatio diario
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // Inicializa selects do Materialize
-    const selects = document.querySelectorAll('select');
-    M.FormSelect.init(selects);
-
-    // Função para carregar as opções dos filtros
-    const carregarOpcoesFiltros = async () => {
-      try {
-        const response = await fetch('botoesmain/obter_opcoes_filtros.php');
-        if (!response.ok) throw new Error('Erro ao obter opções de filtros');
-        const {
-          nomes,
-          matriculas,
-          turmas
-        } = await response.json();
-
-        const filtroNome = document.getElementById('filtro-nome');
-        nomes.forEach(nome => {
-          filtroNome.innerHTML += `<option value="${nome}">${nome}</option>`;
-        });
-
-        const filtroMatricula = document.getElementById('filtro-matricula');
-        matriculas.forEach(matricula => {
-          filtroMatricula.innerHTML += `<option value="${matricula}">${matricula}</option>`;
-        });
-
-        const filtroTurma = document.getElementById('filtro-turma');
-        turmas.forEach(turma => {
-          filtroTurma.innerHTML += `<option value="${turma}">${turma}</option>`;
-        });
-
-        // Re-inicializa os selects do Materialize
-        M.FormSelect.init(selects);
-      } catch (error) {
-        console.error('Erro ao carregar opções de filtros:', error);
-      }
-    };
-
-    // Função para carregar o relatório diário com filtros
-    const carregarRelatorioDiario = async (filtros = {}) => {
-      try {
-        const query = new URLSearchParams(filtros).toString();
-        const response = await fetch(`botoesmain/relatorio_diario.php?${query}`);
-        if (!response.ok) throw new Error('Erro na resposta do servidor');
-
-        const registros = await response.json();
-        const tabela = document.getElementById('tabela-Relatorio_diario');
-        tabela.innerHTML = ''; // Limpa a tabela
-
-        if (registros.length > 0) {
-          registros.forEach(registro => {
-            tabela.innerHTML += `
-              <tr>
-                <td>${registro.nome}</td>
-                <td>${registro.matricula}</td>
-                <td>${registro.turma}</td>
-                <td>${registro.tipo}</td>
-                <td>${registro.data}</td>
-                <td>${registro.horario}</td>
-                <td>${registro.motivo || '-'}</td>
-              </tr>
-            `;
-          });
-        } else {
-          tabela.innerHTML = `
-            <tr>
-              <td colspan="7" class="center-align">Nenhum registro encontrado</td>
-            </tr>
-          `;
-        }
-      } catch (error) {
-        console.error('Erro ao carregar o relatório diário:', error);
-      }
-    };
-
-    // Evento para aplicar filtros ao clicar no botão
-    document.getElementById('aplicar-filtros').addEventListener('click', () => {
-      const filtros = {
-        nome: document.getElementById('filtro-nome').value,
-        matricula: document.getElementById('filtro-matricula').value,
-        turma: document.getElementById('filtro-turma').value,
-        data_inicial: document.getElementById('filtro-data-inicial').value,
-        data_final: document.getElementById('filtro-data-final').value,
-      };
-      carregarRelatorioDiario(filtros);
-    });
-
-    // Carrega as opções dos filtros ao abrir o modal
-    M.Modal.init(document.querySelectorAll('.modal'), {
-      onOpenStart: () => {
-        carregarOpcoesFiltros();
-        carregarRelatorioDiario();
-      },
-    });
-  });
-  //final realatorio diario
-
-
-
-//inicio relatorio
   <?php if ($login != "") { ?>
     window.addEventListener("load", (event) => {
       Swal.fire(
@@ -686,6 +533,4 @@ if (isset($_SESSION['login'])) {
       carregarRelatorio(buscaInputRelatorio.value);
     });
   });
-
-  //final relatorio
 </script>

@@ -1,13 +1,40 @@
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/* login.css */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-.login-box {
-    width: 100%;
-    max-width: 400px;
+body, html {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+}
+
+header {
+    background-color: #4caf50;
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+.container-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+
+.input-field {
+    position: relative;
+    margin-bottom: 1rem;
 }
 
 .header-container {
@@ -19,7 +46,7 @@
 }
 
 .header-text {
-    text-align: center;
+    text-align: left;
 }
 
 .header-text h1 {
