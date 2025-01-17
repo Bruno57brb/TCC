@@ -61,6 +61,10 @@
                             <input type="text" id="CPF" name="CPF" class="validate" required>
                             <label for="CPF">CPF</label>
                         </div>
+                        <div class="input-field">
+                            <input type="date" id="dataNasc" name="dataNasc" class="validate" required>
+                            <label for="dataNasc">Data</label>
+                        </div>
               
 
                         <div class="row">

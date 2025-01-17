@@ -32,7 +32,7 @@ if (isset($_SESSION['login'])) {
     <div class="row">
 
       <!--ENTRADA-->
-      <?php if ($_SESSION['Perfil'] == 1) { ?>
+      <div class="row">
         <div class="col s12 m6 l4">
           <div class="card blue darken-2 custom-card">
             <div class="card-content white-text">
@@ -48,73 +48,76 @@ if (isset($_SESSION['login'])) {
             </a>
           </div>
         </div>
-      <?php } ?>
-
-      <div id="modal-entrada" class="modal">
-        <div class="modal-content">
-          <h4 class="center-align">Registrar Entrada Em Atraso</h4>
-          <form id="form-entrada">
-            <!-- Campo Nome -->
-            <div class="input-field">
-              <i class="material-icons prefix"></i>
-              <input type="text" id="nome" name="nome" required>
-              <label for="nome">Nome completo</label>
-            </div>
-
-            <!-- Campo Data -->
-            <div class="input-field">
-              <i class="material-icons prefix"></i>
-              <input type="date" id="data" name="data" required>
-              <label for="data">Data</label>
-            </div>
-
-            <!-- Campo Horário -->
-            <div class="input-field">
-              <i class="material-icons prefix"></i>
-              <input type="time" id="horario" name="horario" required>
-              <label for="horario">Horário</label>
-            </div>
-
-            <!-- Campo Turma -->
-            <div class="input-field">
-              <i class="material-icons prefix"></i>
-              <textarea id="turma" name="turma" class="materialize-textarea" required></textarea>
-              <label for="turma">Turma</label>
-            </div>
-
-            <!-- Campo Motivo -->
-            <div class="input-field">
-              <i class="material-icons prefix"></i>
-              <textarea id="motivo" name="motivo" class="materialize-textarea" required></textarea>
-              <label for="motivo">Motivo do atraso</label>
-            </div>
-
-            <!-- Campo Matricula -->
-            <div class="input-field">
-              <i class="material-icons prefix"></i>
-              <textarea id="matricula" name="matricula" class="materialize-textarea" required></textarea>
-              <label for="matricula">Matricula</label>
-            </div>
 
 
+        <div id="modal-entrada" class="modal">
+          <div class="modal-content">
+            <h4 class="center-align">Registrar Entrada Em Atraso</h4>
+            <form id="form-entrada">
+
+              <!-- Campo Nome -->
+              <div class="input-field col s12">
+                <i class="material-icons prefix"></i>
+                <input type="text" id="nome" name="nome" required>
+                <label for="nome">Nome completo</label>
+              </div>
+
+              <!-- Campo Data -->
+              <div class="input-field col s12 m6">
+                <i class="material-icons prefix"></i>
+                <input type="date" id="data" name="data" required>
+                <label for="data">Data</label>
+              </div>
+
+              <!-- Campo Horário -->
+              <div class="input-field col s12 m6">
+                <i class="material-icons prefix"></i>
+                <input type="time" id="horario" name="horario" required>
+                <label for="horario">Horário</label>
+              </div>
+
+              <!-- Campo Turma -->
+              <div class="input-field col s12 m6">
+                <i class="material-icons prefix"></i>
+                <textarea id="turma" name="turma" class="materialize-textarea" required></textarea>
+                <label for="turma">Turma</label>
+              </div>
+
+              <!-- Campo Matricula -->
+              <div class="input-field col s12 m6">
+                <i class="material-icons prefix"></i>
+                <textarea id="matricula" name="matricula" class="materialize-textarea" required></textarea>
+                <label for="matricula">Matricula</label>
+              </div>
+
+              <!-- Campo Motivo -->
+              <div class="input-field col s12">
+                <i class="material-icons prefix"></i>
+                <textarea id="motivo" name="motivo" class="materialize-textarea" required></textarea>
+                <label for="motivo">Motivo do atraso</label>
+              </div>
 
 
-            <!-- Botão Registrar -->
-            <div class="center-align">
-              <button type="submit" class="btn waves-effect waves-light">
-                <i class="material-icons left"></i>Registrar
-              </button>
-            </div>
-          </form>
+
+
+
+
+              <!-- Botão Registrar -->
+              <div class="center-align">
+                <button type="submit" class="btn waves-effect waves-light">
+                  <i class="material-icons left"></i>Registrar
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Rodapé do Modal -->
+          <div class="modal-footer">
+            <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
+              <i class="material-icons left"></i>Fechar
+            </a>
+          </div>
         </div>
-
-        <!-- Rodapé do Modal -->
-        <div class="modal-footer">
-          <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
-            <i class="material-icons left"></i>Fechar
-          </a>
-        </div>
-      </div>
 
 
 
@@ -129,246 +132,226 @@ if (isset($_SESSION['login'])) {
 
 
 <!-- SAÍDA -->
-<div class="col s12 m6 l4">
-  <div class="card pink darken-2 custom-card">
-    <div class="card-content white-text">
-      <i class="fas fa-sign-out-alt"></i>
-      <h5>Saída fora de horário</h5>
+<div class="row">
+  <div class="col s12 m6 l4">
+    <div class="card pink darken-2 custom-card">
+      <div class="card-content white-text">
+        <i class="fas fa-sign-out-alt"></i>
+        <h5>Saída fora de horário</h5>
+      </div>
+
+      <a href="#modal-saida" class="white-text modal-trigger">
+        <div class="card-action">
+          ACESSAR
+        </div>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- Modal de Saída -->
+
+  <div id="modal-saida" class="modal">
+    <div class="modal-content">
+      <h4 class="center-align">Registrar Saída Fora de Horário</h4>
+      <form id="form-saida">
+
+
+        <!-- Campo Nome -->
+        <div class="input-field col s12">
+          <i class="material-icons prefix"></i>
+          <input type="text" id="nome" name="nome" required>
+          <label for="nome">Nome completo</label>
+        </div>
+
+        <!-- Campo Data -->
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix"></i>
+          <input type="date" id="data" name="data" class="validate" required>
+          <label for="data">Data</label>
+        </div>
+
+
+        <!-- Campo Horário -->
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix"></i>
+          <input type="time" id="horario" name="horario" required>
+          <label for="horario">Horário</label>
+        </div>
+
+        <!-- Campo turma -->
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix"></i>
+          <textarea id="turma" name="turma" class="materialize-textarea" required></textarea>
+          <label for="turma">Turma</label>
+        </div>
+
+        <!-- Campo matricula -->
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix"></i>
+          <textarea id="matricula" name="matricula" class="materialize-textarea" required></textarea>
+          <label for="matricula">matricula</label>
+        </div>
+
+
+        <!-- Campo Motivo -->
+        <div class="input-field col s12">
+          <i class="material-icons prefix"></i>
+          <textarea id="motivo" name="motivo" class="materialize-textarea" required></textarea>
+          <label for="motivo">Motivo da saída fora de horário</label>
+        </div>
+
+
+
+        <input type="hidden" name="tipo" value="saida">
+
+        <!-- Botão Registrar -->
+        <div class="center-align">
+          <button type="submit" class="btn waves-effect waves-light">
+            <i class="material-icons left"></i>Registrar
+          </button>
+        </div>
+      </form>
     </div>
 
-    <a href="#modal-saida" class="white-text modal-trigger">
+    <!-- Rodapé do Modal -->
+    <div class="modal-footer">
+      <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
+        <i class="material-icons left"></i>Fechar
+      </a>
+    </div>
+  </div>
+
+
+
+
+  <!-- FIM da SAÍDA -->
+
+
+  <!--relatorio-->
+
+
+
+  <div class="col s12 m6 l4">
+    <div class="card orange darken-2 custom-card">
+      <div class="card-content white-text">
+        <i class="fas fa-file-alt"></i>
+        <h5>Relatório Diario</h5>
+      </div>
+
+      <a href="#modal_relatorio_diario" class="white-text modal-trigger">
+        <div class="card-action">
+          ACESSAR
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+
+
+
+
+  <!-- Modal de Relatório Diário com Filtros -->
+  <div id="modal_relatorio_diario" class="modal col s9">
+    <div class="modal-content">
+      <h4 class="center-align">Relatório Diário</h4>
+
+     
+
+      <!-- Tabela de Resultados -->
+      <table class="highlight">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Matrícula</th>
+            <th>Turma</th>
+            <th>Tipo</th>
+            <th>Data</th>
+            <th>Horário</th>
+            <th>Motivo</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-Relatorio_diario">
+          <!-- Os dados serão carregados aqui via AJAX -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Rodapé do Modal -->
+    <div class="modal-footer">
+      <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
+        <i class="material-icons left"></i>Fechar
+      </a>
+    </div>
+  </div>
+
+
+  <div class="col s12 m6 l4">
+    <div class="card grey darken-2 custom-card">
+      <div class="card-content white-text">
+        <i class="fas fa-calendar-alt"></i>
+        <h5>Agendamentos</h5>
+      </div>
       <div class="card-action">
-        ACESSAR
-      </div>
-    </a>
-  </div>
-</div>
-
-<!-- Modal de Saída -->
-<div id="modal-saida" class="modal">
-  <div class="modal-content">
-    <h4 class="center-align">Registrar Saída Fora de Horário</h4>
-    <form id="form-saida">
-      <!-- Campo Nome -->
-      <div class="input-field">
-        <i class="material-icons prefix"></i>
-        <input type="text" id="nome" name="nome" required>
-        <label for="nome">Nome completo</label>
-      </div>
-
-      <!-- Campo Data -->
-      <div class="input-field">
-        <i class="material-icons prefix"></i>
-        <input type="date" id="data" name="data" required>
-        <label for="data">Data</label>
-      </div>
-
-      <!-- Campo Horário -->
-      <div class="input-field">
-        <i class="material-icons prefix"></i>
-        <input type="time" id="horario" name="horario" required>
-        <label for="horario">Horário</label>
-      </div>
-
-      <!-- Campo turma -->
-      <div class="input-field">
-        <i class="material-icons prefix"></i>
-        <textarea id="turma" name="turma" class="materialize-textarea" required></textarea>
-        <label for="turma">Turma</label>
-      </div>
-
-      <!-- Campo Motivo -->
-      <div class="input-field">
-        <i class="material-icons prefix"></i>
-        <textarea id="motivo" name="motivo" class="materialize-textarea" required></textarea>
-        <label for="motivo">Motivo da saída fora de horário</label>
-      </div>
-
-      <!-- Campo matricula -->
-      <div class="input-field">
-        <i class="material-icons prefix"></i>
-        <textarea id="matricula" name="matricula" class="materialize-textarea" required></textarea>
-        <label for="matricula">matricula</label>
-      </div>
-
-      <input type="hidden" name="tipo" value="saida">
-
-      <!-- Botão Registrar -->
-      <div class="center-align">
-        <button type="submit" class="btn waves-effect waves-light">
-          <i class="material-icons left"></i>Registrar
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Rodapé do Modal -->
-  <div class="modal-footer">
-    <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
-      <i class="material-icons left"></i>Fechar
-    </a>
-  </div>
-</div>
-
-
-
-<!-- FIM da SAÍDA -->
-
-
-<!--relatorio-->
-
-
-
-<div class="col s12 m6 l4">
-  <div class="card orange darken-2 custom-card">
-    <div class="card-content white-text">
-      <i class="fas fa-file-alt"></i>
-      <h5>Relatório Diario</h5>
-    </div>
-
-    <a href="#modal_relatorio_diario" class="white-text modal-trigger">
-      <div class="card-action">
-        ACESSAR
-      </div>
-    </a>
-
-  </div>
-</div>
-
-
-
-
-
-<!-- Modal de Relatório Diário com Filtros -->
-<div id="modal_relatorio_diario" class="modal">
-  <div class="modal-content">
-    <h4 class="center-align">Relatório Diário</h4>
-
-    <!-- Filtros -->
-    <div class="row">
-      <div class="input-field col s12 m6 l3">
-        <select id="filtro-nome">
-          <option value="" disabled selected>Filtrar por Nome</option>
-          <!-- Opções serão carregadas dinamicamente -->
-        </select>
-      </div>
-      <div class="input-field col s12 m6 l3">
-        <select id="filtro-matricula">
-          <option value="" disabled selected>Filtrar por Matrícula</option>
-          <!-- Opções serão carregadas dinamicamente -->
-        </select>
-      </div>
-      <div class="input-field col s12 m6 l3">
-        <select id="filtro-turma">
-          <option value="" disabled selected>Filtrar por Turma</option>
-          <!-- Opções serão carregadas dinamicamente -->
-        </select>
-      </div>
-      <div class="input-field col s12 m6 l3">
-        <input type="date" id="filtro-data-inicial" placeholder="Data Inicial">
-      </div>
-      <div class="input-field col s12 m6 l3">
-        <input type="date" id="filtro-data-final" placeholder="Data Final">
+        <a href="#" class="white-text">Acessar</a>
       </div>
     </div>
-
-    <!-- Botão de Aplicar Filtros -->
-    <div class="center-align">
-      <button id="aplicar-filtros" class="btn waves-effect waves-light">
-        <i class="material-icons left">filter_list</i>Aplicar Filtros
-      </button>
-    </div>
-
-    <!-- Tabela de Resultados -->
-    <table class="highlight">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Matrícula</th>
-          <th>Turma</th>
-          <th>Tipo</th>
-          <th>Data</th>
-          <th>Horário</th>
-          <th>Motivo</th>
-        </tr>
-      </thead>
-      <tbody id="tabela-Relatorio_diario">
-        <!-- Os dados serão carregados aqui via AJAX -->
-      </tbody>
-    </table>
   </div>
 
-  <!-- Rodapé do Modal -->
-  <div class="modal-footer">
-    <a href="#!" class="modal-close btn red lighten-1 waves-effect waves-light">
-      <i class="material-icons left"></i>Fechar
-    </a>
-  </div>
-</div>
+  <div class="col s12 m6 l4">
+    <div class="card green darken-2 custom-card">
+      <div class="card-content white-text">
+        <i class="fas fa-user-graduate"></i>
+        <h5>Alunos</h5>
+      </div>
 
+      <a href="alunos.php" class="white-text">
+        <div class="card-action">
+          ACESSAR
 
-<div class="col s12 m6 l4">
-  <div class="card grey darken-2 custom-card">
-    <div class="card-content white-text">
-      <i class="fas fa-calendar-alt"></i>
-      <h5>Agendamentos</h5>
+        </div>
+      </a>
     </div>
-    <div class="card-action">
-      <a href="#" class="white-text">Acessar</a>
+  </div>
+
+
+
+
+
+
+
+
+
+  <div class="col s12 m6 l4">
+    <div class="card cyan darken-2 custom-card">
+      <div class="card-content white-text">
+        <i class="fas fa-file-alt"></i>
+        <h5>Relatório</h5>
+      </div>
+      <a href="#modal-Relatorio" class="white-text modal-trigger">
+        <div class="card-action">
+          ACESSAR
+        </div>
+      </a>
     </div>
   </div>
 </div>
-
-<div class="col s12 m6 l4">
-  <div class="card green darken-2 custom-card">
-    <div class="card-content white-text">
-      <i class="fas fa-user-graduate"></i>
-      <h5>Alunos</h5>
-    </div>
-
-    <a href="alunos.php" class="white-text">
-      <div class="card-action">
-        ACESSAR
-
-      </div>
-    </a>
-  </div>
 </div>
 
-
-
-
-
-
-
-
-
-<div class="col s12 m6 l4">
-  <div class="card cyan darken-2 custom-card">
-    <div class="card-content white-text">
-      <i class="fas fa-file-alt"></i>
-      <h5>Relatório</h5>
-    </div>
-    <a href="#modal-Relatorio" class="white-text modal-trigger">
-      <div class="card-action">
-        ACESSAR
-      </div>
-    </a>
-  </div>
-</div>
-</div>
-</div>
 
 <!-- Modal de Relatório -->
-<div id="modal-Relatorio" class="modal">
+<div id="modal-Relatorio" class="modal col s9 ">
   <div class="modal-content">
-    <h4 class="center-align">Relatório </h4>
+    <h4 class="center-align">Relatório</h4>
 
     <!-- Barra de Pesquisa -->
     <div class="input-field">
       <i class="material-icons prefix"></i>
       <input type="text" id="busca-Relatorio" placeholder="Digite para buscar (nome, matrícula, turma)">
-    </div>
+      </div>
+      
+    
 
     <!-- Tabela de Resultados -->
     <table class="highlight">
@@ -396,8 +379,14 @@ if (isset($_SESSION['login'])) {
     </a>
   </div>
 </div>
+</div>
+</div>
+
 
 <?php include_once "footer.php" ?>
+
+
+
 
 
 
@@ -446,7 +435,7 @@ if (isset($_SESSION['login'])) {
 
 
 
-// inicio saida
+  // inicio saida
   document.addEventListener('DOMContentLoaded', () => {
     // Inicializa os modais
     M.Modal.init(document.querySelectorAll('.modal'));
@@ -472,7 +461,7 @@ if (isset($_SESSION['login'])) {
 
 
   });
-// final saida
+  // final saida
 
 
   //inicio relatio diario
@@ -576,13 +565,14 @@ if (isset($_SESSION['login'])) {
 
 
 
-//inicio relatorio
+  //inicio relatorio
+
   <?php if ($login != "") { ?>
     window.addEventListener("load", (event) => {
       Swal.fire(
         <?= json_encode($login) ?>
       )
-    })
+    });
   <?php } ?>
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -607,6 +597,7 @@ if (isset($_SESSION['login'])) {
         const registros = await response.json();
 
         const tabela = document.getElementById('tabela-Relatorio_diario');
+        if (!tabela) return; // Verifica se a tabela existe
         tabela.innerHTML = ''; // Limpa a tabela
 
         // Popula a tabela com os registros
@@ -646,6 +637,7 @@ if (isset($_SESSION['login'])) {
         const registros = await response.json();
 
         const tabela = document.getElementById('tabela-Relatorio');
+        if (!tabela) return; // Verifica se a tabela existe
         tabela.innerHTML = ''; // Limpa a tabela
 
         // Popula a tabela com os registros
@@ -677,15 +669,17 @@ if (isset($_SESSION['login'])) {
 
     // Evento para buscar enquanto digita no campo de pesquisa
     const buscaInputDiario = document.getElementById('busca-Relatorio_diario');
-    buscaInputDiario.addEventListener('input', () => {
-      carregarRelatorio_diario(buscaInputDiario.value);
-    });
+    if (buscaInputDiario) {
+      buscaInputDiario.addEventListener('input', () => {
+        carregarRelatorio_diario(buscaInputDiario.value);
+      });
+    }
 
     const buscaInputRelatorio = document.getElementById('busca-Relatorio');
-    buscaInputRelatorio.addEventListener('input', () => {
-      carregarRelatorio(buscaInputRelatorio.value);
-    });
+    if (buscaInputRelatorio) {
+      buscaInputRelatorio.addEventListener('input', () => {
+        carregarRelatorio(buscaInputRelatorio.value);
+      });
+    }
   });
-
-  //final relatorio
 </script>

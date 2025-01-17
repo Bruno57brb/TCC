@@ -548,14 +548,13 @@ if (isset($_SESSION['login'])) {
 </div>
 
 <?php include_once "footer.php" ?>
-
 <script>
   <?php if ($login != "") { ?>
     window.addEventListener("load", (event) => {
       Swal.fire(
         <?= json_encode($login) ?>
       )
-    })
+    });
   <?php } ?>
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -580,6 +579,7 @@ if (isset($_SESSION['login'])) {
         const registros = await response.json();
 
         const tabela = document.getElementById('tabela-Relatorio_diario');
+        if (!tabela) return; // Verifica se a tabela existe
         tabela.innerHTML = ''; // Limpa a tabela
 
         // Popula a tabela com os registros
@@ -619,6 +619,7 @@ if (isset($_SESSION['login'])) {
         const registros = await response.json();
 
         const tabela = document.getElementById('tabela-Relatorio');
+        if (!tabela) return; // Verifica se a tabela existe
         tabela.innerHTML = ''; // Limpa a tabela
 
         // Popula a tabela com os registros
@@ -642,7 +643,7 @@ if (isset($_SESSION['login'])) {
             <td colspan="7" class="center-align">Nenhum registro encontrado</td>
           </tr>
         `;
-        }
+        } 
       } catch (error) {
         console.error('Erro ao carregar o relatório:', error);
       }
@@ -650,13 +651,17 @@ if (isset($_SESSION['login'])) {
 
     // Evento para buscar enquanto digita no campo de pesquisa
     const buscaInputDiario = document.getElementById('busca-Relatorio_diario');
-    buscaInputDiario.addEventListener('input', () => {
-      carregarRelatorio_diario(buscaInputDiario.value);
-    });
+    if (buscaInputDiario) {
+      buscaInputDiario.addEventListener('input', () => {
+        carregarRelatorio_diario(buscaInputDiario.value);
+      });
+    }
 
     const buscaInputRelatorio = document.getElementById('busca-Relatorio');
-    buscaInputRelatorio.addEventListener('input', () => {
-      carregarRelatorio(buscaInputRelatorio.value);
-    });
+    if (buscaInputRelatorio) {
+      buscaInputRelatorio.addEventListener('input', () => {
+        carregarRelatorio(buscaInputRelatorio.value);
+      });
+    }
   });
 </script>

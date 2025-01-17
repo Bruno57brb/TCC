@@ -13,13 +13,14 @@
 
 <?php
 // Verificar se todos os dados foram enviados pelo formulário
-if (isset($_POST['Nome'], $_POST['matricula'], $_POST['Email'], $_POST['turma'], $_POST['CPF'])) {
+if (isset($_POST['Nome'], $_POST['matricula'], $_POST['Email'], $_POST['turma'], $_POST['CPF'], $_POST['dataNasc'])) {
     // Receber os dados do formulário
     $Nome = $_POST['Nome'];
     $matricula = $_POST['matricula'];
     $Email = $_POST['Email'];
     $turma = $_POST['turma'];
     $CPF = $_POST['CPF'];
+    $dataNasc = $_POST['dataNasc'];
 
     // Conectar ao BD
     require_once "../conexao/conexao.php";
@@ -33,14 +34,24 @@ if (isset($_POST['Nome'], $_POST['matricula'], $_POST['Email'], $_POST['turma'],
 
     // Verifica se o usuário já existe
     if ($result->num_rows > 0) {
-        echo "Usuário já existe.";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro ao cadastrar',
+                text: 'Usuario ja cadastrado.',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = '../crud/cadastrar_aluno.php'; // Redireciona de volta para o formulário
+            });
+            </script>";
     } else {
 
 
 
         // Preparar a consulta para inserir o novo usuário
-        $stmt = $conexao->prepare("INSERT INTO alunos (Nome, matricula, Email, turma, CPF) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $Nome, $matricula, $Email, $turma, $CPF); // 's' indica que todos os parâmetros são strings
+        $stmt = $conexao->prepare("INSERT INTO alunos (Nome, matricula, Email, turma, CPF, dataNasc) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $Nome, $matricula, $Email, $turma, $CPF, $dataNasc); // 's' indica que todos os parâmetros são strings
 
         // Executar a inserção
         if ($stmt->execute()) {

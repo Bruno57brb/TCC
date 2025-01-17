@@ -106,9 +106,8 @@
         </table>
 
         <br>
-        <a href='relatorio.php' class="blue waves-effect waves-light btn">
-            <i class="material-icons right">add</i>Gerar relatório
-        </a>
+
+
         <a href='main.php' class="red 3 waves-effect waves-light btn right">
             <i class="material-icons right">arrow_back</i>Voltar
         </a>
