@@ -18,7 +18,7 @@ mysqli_close($conexao);
 <!-- Barra de navegação superior -->
 <nav class="green">
 <div class="header-logo">
-                <img class="right" src="img/assistencia_estudantil.png" alt="Logo da Assistência Estudantil">
+                <img class="right" src="../img/assistencia_estudantil.png" alt="Logo da Assistência Estudantil">
             </div>
   <div class="nav-wrapper">
     <!-- Botão de Hambúrguer/Seta -->
@@ -39,11 +39,11 @@ mysqli_close($conexao);
 <nav id="sidebar">
   <div class="navbar">
     <div class="logo">
-    
+      <img src="../img/user.jpg" alt="Logo">
       <h1><?php echo $row['nome']; ?></h1>
     </div>
     <ul>
-
+  
 
 <li><a href="crud/cadastrar_servidor.php" class="nav-link" 
    <?php if ($_SESSION['Perfil'] != 1) { echo 'onclick="event.preventDefault(); showPermissionAlert();"'; } ?>>
@@ -93,7 +93,9 @@ mysqli_close($conexao);
 
 
 
-      <li><a href="logout.php" class="nav-link logout">
+
+
+      <li><a href="../logout.php" class="nav-link logout">
           <i class="fas fa-sign-out-alt"></i>
           <span class="nav-item">Logout</span>
         </a></li>
@@ -107,6 +109,8 @@ mysqli_close($conexao);
 </style>
 
 <script>
+
+    
   // Função para alternar a visibilidade da sidebar
   function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
@@ -123,3 +127,5 @@ mysqli_close($conexao);
     }
   }
 </script>
+
+

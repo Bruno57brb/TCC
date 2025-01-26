@@ -29,9 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Executa a query
     if ($stmt->execute()) {
-        echo "Entrada registrada com sucesso!";
+        echo "Saida registrada com sucesso!";
     } else {
-        echo "Erro ao registrar entrada: " . $stmt->error;
+        echo "Erro ao registrar saida: " . $stmt->error;
     }
 
     // Fecha o statement e a conexão

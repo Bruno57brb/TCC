@@ -1,6 +1,10 @@
 <?php
 require_once "conexao.php";
 
+// Exibe erros de PHP para depuração (remover em produção)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // Verifica se as senhas foram enviadas
 if (!isset($_POST['senha'], $_POST['repetirSenha'], $_POST['email'], $_POST['token'])) {
     die("Dados incompletos!");
@@ -14,7 +18,6 @@ $repetirSenha = $_POST['repetirSenha'];
 // Valida se as senhas são iguais
 if ($senha !== $repetirSenha) {
     echo "
-    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
     <script>
         Swal.fire({
             icon: 'error',
@@ -25,7 +28,7 @@ if ($senha !== $repetirSenha) {
             window.history.back();
         });
     </script>";
-    die();
+    exit(); // Certifique-se de que o script pare aqui
 }
 
 // Verifica o token no banco
@@ -39,7 +42,6 @@ $recuperar = $resultado->fetch_assoc();
 
 if (!$recuperar) {
     echo "
-    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
     <script>
         Swal.fire({
             icon: 'error',
@@ -50,7 +52,7 @@ if (!$recuperar) {
             window.location.href = '../index.php';
         });
     </script>";
-    die();
+    exit(); // Certifique-se de que o script pare aqui
 }
 
 // Gera o hash da nova senha
@@ -63,6 +65,8 @@ $stmt = $conexao->prepare($sql);
 $stmt->bind_param("ss", $senha_hash, $email);
 if (!$stmt->execute()) {
     error_log("SQL Error: " . $stmt->error); // Log any SQL errors
+    echo "Erro ao atualizar a senha."; // Exibe um erro simples
+    exit();
 }
 
 // Marca o token como usado
@@ -71,16 +75,31 @@ $stmt2 = $conexao->prepare($sql2);
 $stmt2->bind_param("ss", $email, $token);
 $stmt2->execute();
 
-echo "
-<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Sucesso!',
-        text: 'Sua senha foi alterada com sucesso.',
-        confirmButtonText: 'Ok'
-    }).then(() => {
-        window.location.href = '../login.php';
-    });
-</script>";
+// Verifique se a operação foi bem-sucedida antes de redirecionar
+if ($stmt2->affected_rows > 0) {
+    echo "
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: 'Sua senha foi alterada com sucesso.',
+            confirmButtonText: 'Ok'
+        }).then(() => {
+            window.location.href = '../index.php';
+        });
+    </script>";
+} else {
+    echo "
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            text: 'Ocorreu um erro ao marcar o token como utilizado.',
+            confirmButtonText: 'Ok'
+        }).then(() => {
+            window.location.href = '../index.php';
+        });
+    </script>";
+}
+exit(); // Garante que o script não continue executando depois do redirecionamento
 ?>

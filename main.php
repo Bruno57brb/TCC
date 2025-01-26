@@ -217,7 +217,7 @@ if (isset($_SESSION['login'])) {
       <div class="input-field col s12">
         <i class="material-icons prefix"></i>
         <textarea id="motivo" name="motivo" class="materialize-textarea" required></textarea>
-        <label for="motivo">Motivo do atraso</label>
+        <label for="motivo">Motivo da saída</label>
       </div>
 
 
@@ -305,7 +305,7 @@ if (isset($_SESSION['login'])) {
   <div class="card grey darken-2 custom-card">
     <div class="card-content white-text">
       <i class="fas fa-calendar-alt"></i>
-      <h5>Agendamentos</h5>
+      <h5>Calendário</h5>
     </div>
     <div class="card-action">
       <a href="#" class="white-text">Acessar</a>
