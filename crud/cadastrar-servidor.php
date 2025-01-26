@@ -33,7 +33,17 @@ if (isset($_POST['Nome'], $_POST['SIAPE'], $_POST['Email'], $_POST['Senha'], $_P
 
     // Verifica se o usuário já existe
     if ($result->num_rows > 0) {
-        echo "Usuário já existe.";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro! Usuário ja existe',
+                text: 'Falha ao cadastrar.',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = 'cadastrar_aluno.php';
+            });
+            </script>";
     } else {
         // Hash da senha
         $senha_hash = password_hash($Senha, PASSWORD_DEFAULT);

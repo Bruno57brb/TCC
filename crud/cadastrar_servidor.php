@@ -38,7 +38,7 @@
                
                 <div class="col s12 m8 offset-m2 l6 offset-l3">
                     <form action="cadastrar-servidor.php" method="POST">
-                        <h5 class="center-align">CADASTRAR-SE</h5>
+                        <h5 class="center-align">CADASTRAR NOVO SERVIDOR</h5><br>
 
                         <div class="input-field">
                             <input type="text" id="nome" name="Nome" class="validate" required autofocus>
@@ -64,9 +64,9 @@
                                 <option value="" disabled selected>Selecione a Categoria</option>
                                 <option value="1">Coordenação</option>
                                 <option value="2">Nutricionista</option>
-                                <option value="3">Psicóloga</option>
-                                <option value="4">Enfermeira</option>
-                                <option value="5">Médico</option>
+                                <option value="3">Psicólogo(a)</option>
+                                <option value="4">Enfermeiro(a)</option>
+                                <option value="5">Médico(a)</option>
                             </select>
                         </div>
 

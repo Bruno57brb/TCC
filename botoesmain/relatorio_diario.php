@@ -9,14 +9,17 @@ $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
 $dataAtual = date('Y-m-d');
 
 // Montar a consulta
-$sql = "SELECT nome, matricula, turma, tipo, data, horario, motivo 
+$sql = "SELECT alunos.nome, alunos.matricula, alunos.turma, registros.tipo, registros.data, registros.horario, registros.motivo 
         FROM registros 
+        inner join alunos on alunos.cpf = registros.cpf_aluno
         WHERE data = '$dataAtual'"; // Filtrar pelo dia atual
 if (!empty($busca)) {
-    $sql .= " AND (nome LIKE '%$busca%' OR matricula LIKE '%$busca%' OR turma LIKE '%$busca%')";
+    $sql .= " AND (alunos.nome LIKE '%$busca%' OR alunos.matricula LIKE '%$busca%' OR alunos.turma LIKE '%$busca%')";
 }
-$sql .= " ORDER BY nome ASC"; // Ordenar por nome em ordem alfabética
+$sql .= " ORDER BY alunos.nome ASC"; // Ordenar por nome em ordem alfabética
 
+//echo $sql;
+//exit;
 // Executar a consulta
 $resultado = mysqli_query($conexao, $sql);
 

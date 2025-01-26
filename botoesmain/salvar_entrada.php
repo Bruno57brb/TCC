@@ -4,12 +4,15 @@ include '../conexao/conexao.php'; // Inclua sua conexão ao banco de dados
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtendo os dados do formulário
-    $nome = $_POST['nome'];
+  
     $data = $_POST['data'];
     $horario = $_POST['horario'];
-    $turma = $_POST['turma']; 
     $motivo = $_POST['motivo'];
-    $matricula = $_POST['matricula'];
+    $cpf = $_POST['cpf'];
+    $tipo = $_POST['tipo'];
+
+
+
  
 
 
@@ -17,13 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conexao = conectar();
 
  
-    $stmt = $conexao->prepare("INSERT INTO registros (nome, data, horario,  turma, motivo, matricula) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conexao->prepare("INSERT INTO registros ( data, horario,   motivo, cpf_aluno, tipo ) VALUES (?, ?, ?, ?, ? )");
     if ($stmt === false) {
         die('Erro ao preparar a query: ' . $conexao->error);
     }
 
     // Bind dos parâmetros
-    $stmt->bind_param('ssssss', $nome, $data, $horario,  $turma, $motivo, $matricula); // Alterado para incluir dois parâmetros adicionais
+    $stmt->bind_param('sssss',  $data, $horario,   $motivo, $cpf, $tipo); // Alterado para incluir dois parâmetros adicionais
 
     // Executa a query
     if ($stmt->execute()) {

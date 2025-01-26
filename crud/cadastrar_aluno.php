@@ -63,7 +63,7 @@
                         </div>
                         <div class="input-field">
                             <input type="date" id="dataNasc" name="dataNasc" class="validate" required>
-                            <label for="dataNasc">Data</label>
+                            <label for="dataNasc">Data de nascimento</label>
                         </div>
               
 
@@ -72,7 +72,7 @@
                                 <button type="submit" class="btn waves-effect waves-light blue">Cadastrar</button>
                             </div>
                             <div class="col s12">
-                                <a href="../main.php" class="btn waves-effect waves-light green" onclick="showLogin()">voltar</a>
+                                <a href="../alunos.php" class="btn waves-effect waves-light green" onclick="showLogin()">voltar</a>
                             </div>
                         </div>
                     </form>

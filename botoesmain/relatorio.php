@@ -5,20 +5,20 @@ $conexao = conectar();
 
 $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
 
-// Obtém o ano atual
-$anoAtual = date('Y');
+ 
 
 // Montar a consulta
-$sql = "SELECT nome, matricula, turma, tipo, data, horario, motivo 
+$sql = "SELECT alunos.nome, alunos.matricula, alunos.turma, registros.tipo, registros.data, registros.horario, registros.motivo 
         FROM registros 
-        WHERE YEAR(data) = '$anoAtual'"; // Filtra registros do ano atual
-
+        inner join alunos on alunos.cpf = registros.cpf_aluno
+        WHERE QUARTER(data) = QUARTER(CURDATE()) AND YEAR(data) = YEAR(CURDATE())";
 if (!empty($busca)) {
-    $sql .= " AND (nome LIKE '%$busca%' OR matricula LIKE '%$busca%' OR turma LIKE '%$busca%')";
+    $sql .= " AND (alunos.nome LIKE '%$busca%' OR alunos.matricula LIKE '%$busca%' OR alunos.turma LIKE '%$busca%')";
 }
+$sql .= " ORDER BY alunos.nome ASC"; // Ordenar por nome em ordem alfabética
 
-$sql .= " ORDER BY nome ASC";
-
+//echo $sql;
+//exit;
 // Executar a consulta
 $resultado = mysqli_query($conexao, $sql);
 
@@ -34,4 +34,3 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
     $dados[] = $linha;
 }
 echo json_encode($dados);
-?>

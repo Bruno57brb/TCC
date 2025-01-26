@@ -1,33 +1,37 @@
+
 <?php
 include '../conexao/conexao.php'; // Inclua sua conexão ao banco de dados
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtendo os dados do formulário
-    $nome = $_POST['nome'];
+  
     $data = $_POST['data'];
     $horario = $_POST['horario'];
-    $turma = $_POST['turma'];
     $motivo = $_POST['motivo'];
-    $matricula = $_POST['matricula'];
+    $cpf = $_POST['cpf'];
     $tipo = $_POST['tipo'];
+
+
+ 
+
 
     // Conectando ao banco de dados
     $conexao = conectar();
 
-
-    $stmt = $conexao->prepare("INSERT INTO registros (nome, data, horario, turma, motivo, matricula, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+ 
+    $stmt = $conexao->prepare("INSERT INTO registros ( data, horario,   motivo, cpf_aluno, tipo) VALUES (?, ?, ?, ?,  ?)");
     if ($stmt === false) {
         die('Erro ao preparar a query: ' . $conexao->error);
     }
 
     // Bind dos parâmetros
-    $stmt->bind_param('sssssss', $nome, $data, $horario, $turma, $motivo, $matricula, $tipo);
+    $stmt->bind_param('sssss',  $data, $horario,   $motivo, $cpf, $tipo); // Alterado para incluir dois parâmetros adicionais
 
     // Executa a query
     if ($stmt->execute()) {
-        echo "Saída registrada com sucesso!";
+        echo "Entrada registrada com sucesso!";
     } else {
-        echo "Erro ao registrar saída: " . $stmt->error;
+        echo "Erro ao registrar entrada: " . $stmt->error;
     }
 
     // Fecha o statement e a conexão

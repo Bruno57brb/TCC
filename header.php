@@ -1,7 +1,5 @@
 <?php 
 
-
-
 // Conectar ao banco de dados
 require_once "conexao/conexao.php";
 $conexao = conectar();
@@ -17,22 +15,17 @@ mysqli_close($conexao);
 
 <link rel="stylesheet" href="css/materialize.css">
 
-
-
 <!-- Barra de navegação superior -->
 <nav class="green">
 <div class="header-logo">
                 <img class="right" src="img/assistencia_estudantil.png" alt="Logo da Assistência Estudantil">
             </div>
   <div class="nav-wrapper">
-
-  
     <!-- Botão de Hambúrguer/Seta -->
     <div class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">
       &#9776; <!-- Ícone de três barras inicialmente -->
     </div>
 
-    
     <!-- Nome do usuário e imagem -->
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li>
@@ -50,20 +43,17 @@ mysqli_close($conexao);
       <h1><?php echo $row['nome']; ?></h1>
     </div>
     <ul>
-      
     <?php 
 // Verifica se o perfil é 1 (ou outro perfil desejado)
 if ($_SESSION['Perfil'] == 1 ) {
 ?>
   <li><a href="crud/cadastrar_servidor.php" class="nav-link">
       <i class="fab fa-dochub"></i>
-      <span class="nav-item">Cadastro do Servidor</span>
+      <span class="nav-item">Cadastro do servidor</span>
     </a></li>
 <?php 
 }
 ?>
-
-
 
 
       <li><a href="crud/cadastrar_aluno.php" class="nav-link">
@@ -71,15 +61,11 @@ if ($_SESSION['Perfil'] == 1 ) {
           <span class="nav-item">Cadastro do discente</span>
         </a></li>
 
-      <li><a href="#" class="nav-link">
-          <i class="fab fa-dochub"></i>
-          <span class="nav-item">Relatório</span>
-        </a></li>
-    
+ 
       <li><a href="crud/editcad" class="nav-link">
           <i class="fas fa-cog"></i>
-          <span class="nav-item">Configurações</span>
-        </a></li>
+          <span class="nav-item">Editar perfil de usuário</span>
+        </a></li> 
 
       <li><a href="logout.php" class="nav-link logout">
           <i class="fas fa-sign-out-alt"></i>

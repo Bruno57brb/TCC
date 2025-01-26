@@ -13,13 +13,13 @@
 
 <?php
 // Verificar se todos os dados foram enviados pelo formulário
-if (isset($_POST['Nome'], $_POST['matricula'], $_POST['Email'], $_POST['turma'], $_POST['CPF'], $_POST['dataNasc'])) {
+if (isset($_POST['Nome'], $_POST['matricula'], $_POST['Email'], $_POST['turma'], $_POST['CPF'])) {
     // Receber os dados do formulário
     $Nome = $_POST['Nome'];
     $matricula = $_POST['matricula'];
     $Email = $_POST['Email'];
     $turma = $_POST['turma'];
-    $CPF = $_POST['CPF'];
+    $CPF = $_POST['CPF'];  
     $dataNasc = $_POST['dataNasc'];
 
     // Conectar ao BD
@@ -37,12 +37,12 @@ if (isset($_POST['Nome'], $_POST['matricula'], $_POST['Email'], $_POST['turma'],
         echo "<script>
             Swal.fire({
                 icon: 'error',
-                title: 'Erro ao cadastrar',
-                text: 'Usuario ja cadastrado.',
+                title: 'Erro! Usuário ja existe',
+                text: 'Falha ao cadastrar.',
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                window.location.href = '../crud/cadastrar_aluno.php'; // Redireciona de volta para o formulário
+                window.location.href = 'cadastrar_aluno.php';
             });
             </script>";
     } else {
@@ -53,6 +53,11 @@ if (isset($_POST['Nome'], $_POST['matricula'], $_POST['Email'], $_POST['turma'],
         $stmt = $conexao->prepare("INSERT INTO alunos (Nome, matricula, Email, turma, CPF, dataNasc) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssss", $Nome, $matricula, $Email, $turma, $CPF, $dataNasc); // 's' indica que todos os parâmetros são strings
 
+
+
+
+
+        
         // Executar a inserção
         if ($stmt->execute()) {
             echo "<script>
@@ -63,7 +68,7 @@ if (isset($_POST['Nome'], $_POST['matricula'], $_POST['Email'], $_POST['turma'],
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                window.location.href = '../main.php';
+                window.location.href = '../alunos.php';
             });
             </script>";
         } else {
